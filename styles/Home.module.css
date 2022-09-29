@@ -33,10 +33,19 @@
 
 .topWrapper {
   padding-top: 30px;
+  overflow: hidden;
 }
 
 .pullRight {
   float: right!important;
+  display: flex;
+  flex-direction: row;
+}
+
+.userDetail {
+  margin-top: 8px;
+  margin-left: 2vh;
+  color: #02d7f2;
 }
 
 .footer {
