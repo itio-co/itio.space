@@ -2,7 +2,13 @@ This is [ITIO Space Website](https://itio.space/) project
 
 ## Getting Started
 
-First, run the development server:
+Before running the server, create .env.dev
+
+```
+NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=<web3auth cliecn id>
+```
+
+Run the development server:
 
 ```bash
 npm run dev
