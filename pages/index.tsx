@@ -152,6 +152,15 @@ const Home = () => {
         </Head>
 
         <div className={styles.topWrapper}>
+          <div className={styles.pullLeft}>
+            <a
+              href="https://itios.co"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src="/itio.png" alt="itio Logo" width={64} height={38} />
+            </a>
+          </div>
           <div className={styles.pullRight}>
             <a
               href="https://github.com/itio-co/itio.space"

@@ -36,6 +36,12 @@
   overflow: hidden;
 }
 
+.pullLeft {
+  float: left!important;
+  display: flex;
+  flex-direction: row;
+}
+
 .pullRight {
   float: right!important;
   display: flex;
