@@ -24,8 +24,6 @@ export const connectWeb3Auth = async () => {
         process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
     });
 
-    console.log("web3auth: ", web3auth);
-
     await web3auth.initModal();
     return web3auth;
   } catch (error) {
