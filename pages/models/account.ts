@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export type UserInfo = {
     aggregateVerifier: string | undefined,
     dappShare: string | undefined,
