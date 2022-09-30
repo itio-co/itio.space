@@ -51,7 +51,25 @@
 .userDetail {
   margin-top: 8px;
   margin-left: 2vh;
-  color: #02d7f2;
+  color: white;
+}
+
+.profileWrapper {
+  margin-left: 10px;
+}
+
+.profileImage {
+  -webkit-background-size: 32px 32px;
+  background-size: 32px 32px;
+  border: 0;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  display: block;
+  margin: 0px;
+  position: relative;
+  height: 32px;
+  width: 32px;
+  z-index: 0;
 }
 
 .footer {
