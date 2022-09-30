@@ -1,3 +1,5 @@
+![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=itio-space-iatmjvewo-itio)
+
 This is [ITIO Space Website](https://itio.space/) project
 
 ## Getting Started
