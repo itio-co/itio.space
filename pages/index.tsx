@@ -170,6 +170,7 @@ const Home = () => {
               <Image src="/GitHub-Mark-Light-32px.png" alt="Github Logo" width={32} height={32} />
             </a>
             {/* {provider && <div className={styles.userDetail}>{`user: ${web3UserInfo.name}`}</div>} */}
+            {provider && <div className={styles.profileWrapper}><img className={styles.profileImage} src={web3UserInfo.profileImage} /></div>}
             <div style={{marginLeft: '2vh'}}>{provider ? loggedInView : unloggedInView}</div>
           </div>
         </div>

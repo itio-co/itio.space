@@ -7,7 +7,7 @@ export const connectWeb3Auth = async () => {
     const web3auth = await new Web3Auth({
       // type UIConfig
       uiConfig: {
-        appLogo: "https://pbs.twimg.com/media/B95HrLyIcAAw2TT.jpg",
+        appLogo: "itio.png",
         theme: "dark",
         loginMethodsOrder: ["google", "facebook"],
       },
@@ -21,8 +21,7 @@ export const connectWeb3Auth = async () => {
         tickerName: Config.ethTestnetChainConfig.tickerName,
       },
       clientId:
-        process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID ||
-        "BMQy-NVFv500r-TUYAQXZLcGrS2pP_YKgWfK_32v9mk5fzrSq_j3KFr6faH3xdB_PQTxyZxeQw6W6Cu1JIcCkkU",
+        process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
     });
 
     console.log("web3auth: ", web3auth);
