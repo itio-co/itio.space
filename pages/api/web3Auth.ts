@@ -1,6 +1,6 @@
 import { Web3Auth } from "@web3auth/web3auth";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import Config from "../constants/Config";
+import Config from "../../constants/Config";
 
 export const connectWeb3Auth = async () => {
   try {

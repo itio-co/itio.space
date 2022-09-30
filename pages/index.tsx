@@ -6,7 +6,7 @@ import { Web3Auth } from "@web3auth/web3auth"
 import { SafeEventEmitterProvider } from "@web3auth/base"
 import { connectWeb3Auth } from './api/web3Auth'
 import RPC from "./api/evm"
-import { UserInfo } from './models/account'
+import { UserInfo } from '../models/account'
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
