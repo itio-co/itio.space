@@ -3,7 +3,7 @@
 }
 
 .mainWrapper {
-  padding-bottom: 280px;
+  padding-bottom: 10px;
 }
 
 .mainWrapper h1 {
@@ -29,6 +29,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.model {
+  height: 60vh;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .topWrapper {

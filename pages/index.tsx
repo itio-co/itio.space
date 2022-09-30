@@ -9,6 +9,10 @@ import RPC from "./api/evm"
 import { UserInfo } from '../models/account'
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Stats, OrbitControls } from "@react-three/drei";
+import Model from "../components/Scene";
 
 const Home = () => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
@@ -185,6 +189,16 @@ const Home = () => {
                 {' ITIO Space'}
               </a> |
             </h1>
+            <div className={styles.model}>
+              <Canvas camera={{ position: [0, 2, 4] }}>
+                <Suspense fallback={null}>
+                  <ambientLight intensity={0.2} />
+                  <pointLight intensity={1.0} position={[5, 3, 5]} />
+                  <Model rotation={[0, -0.75, 0]} scale={0.15} />
+                </Suspense>
+                <OrbitControls autoRotate autoRotateSpeed={0.1} />
+              </Canvas>
+            </div>
           </div>
         </main>
 

@@ -13,12 +13,12 @@ export const connectWeb3Auth = async () => {
       },
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: chainConfig.ethTestnetChainConfig.chainId,
-        rpcTarget: chainConfig.ethTestnetChainConfig.rpcTarget,
-        displayName: chainConfig.ethTestnetChainConfig.displayName,
-        blockExplorer: chainConfig.ethTestnetChainConfig.blockExplorer,
-        ticker: chainConfig.ethTestnetChainConfig.ticker,
-        tickerName: chainConfig.ethTestnetChainConfig.tickerName,
+        chainId: Config.ethTestnetChainConfig.chainId,
+        rpcTarget: Config.ethTestnetChainConfig.rpcTarget,
+        displayName: Config.ethTestnetChainConfig.displayName,
+        blockExplorer: Config.ethTestnetChainConfig.blockExplorer,
+        ticker: Config.ethTestnetChainConfig.ticker,
+        tickerName: Config.ethTestnetChainConfig.tickerName,
       },
       clientId:
         process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
