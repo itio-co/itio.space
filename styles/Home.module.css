@@ -22,13 +22,25 @@
 }
 
 .main {
-  min-height: 100vh;
+  min-height: 90vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   /*justify-content: center;*/
   align-items: center;
+}
+
+.profile {
+  min-height: 90vh;
+  padding: 4rem 0;
+  margin-left: 30%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  filter: drop-shadow(0 1px 3px);
+  color: rgb(26, 182, 209)
 }
 
 .canvas {
@@ -43,11 +55,11 @@
   width: 100%;
   display: flex;
 
-  background-color: blue;
+  background-color: black;
   background-image:
     linear-gradient(
-      to top right,
-      cyan, darkblue
+      to top left,
+      rgba(255, 0, 255, 0.267), black
     );
 }
 
@@ -74,14 +86,9 @@
   flex-direction: row;
 }
 
-.userDetail {
-  margin-top: 8px;
-  margin-left: 2vh;
-  color: white;
-}
-
 .profileWrapper {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .profileImage {
@@ -130,7 +137,7 @@
   line-height: 1.15;
   font-size: 4rem;
   color: whitesmoke;
-  filter: drop-shadow(0 1px 3px);
+  filter: drop-shadow(0 1px 3px black);
   text-decoration: none;
 }
 

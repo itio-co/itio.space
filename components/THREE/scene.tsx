@@ -19,7 +19,7 @@ export const Scene = () => {
         <pointLight intensity={1.2} position={[5, 3, 5]} />
         <Model
           rotation={[0, -0.75, 0]}
-          scale={0.25}
+          scale={0.22}
           position={[0, -1, 0]}
         />
       </Suspense>
