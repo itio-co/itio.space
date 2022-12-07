@@ -83,7 +83,7 @@ a {
   color: #F3E600;
   filter: drop-shadow(0 1px 3px);
   letter-spacing: 3px;
-  font-family: "Exan";
+  font-family: "Exan, sans-serif";
 }
 
 .loading {
