@@ -1,0 +1,30 @@
+{
+    "name": "DevSpace",
+    "dockerComposeFile": [
+      "../docker-compose.yml"
+    ],
+    "service": "cmd",
+    "workspaceFolder": "${localWorkspaceFolder}",
+    "shutdownAction": "stopCompose",
+    "userEnvProbe": "loginInteractiveShell",
+    "remoteUser": "node",
+    // "postCreateCommand": "sudo chown node src/backstage/node_modules",
+    "runServices": ["cmd", "app", "home"],
+    "forwardPorts": ["app:3000", "app:7007", "home:3011" ],
+    "portsAttributes": {
+      "app:3000": ["backstage-app"],
+      "app:7007": ["backstage-backend"],
+      "home:3011": ["home"]
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode",
+          "ms-vsliveshare.vsliveshare",
+          "eamodio.gitlens"
+        ]
+      }
+    }
+  }
+  

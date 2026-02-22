@@ -1,36 +1,132 @@
-![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=itio-space-iatmjvewo-itio)
+# ITIO Space Home page
 
-This is [ITIO Space Website](https://itio.space/) project
+Welcome to **ITIO Space**!. This is our main website source code Project
 
-## Getting Started
+View online page at [https://itio.space/itio-space](https://itio.space/itio-space)
 
-Before running the server, create .env.dev
+## Table of Contents
 
-```
-NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=<web3auth cliecn id>
-```
+- [Dependencies](#Dependencies)
+- [Installation](#installation)
+- [Scripts](#scripts)
+- [Folder Structure](#folder-structure)
+- [Environment Variables](#environment-variables)
+- [Testing](#testing)
+- [Linting & Formatting](#linting--formatting)
 
-Run the development server:
+---
+
+
+## Dependencies
+
+- **React 18+**: Latest stable version of React with hooks and functional components.
+- **NextJS 14+**: The React server-side rendering framework.
+- **Material UI**: UI Framework
+- **TailwindCSS**: CSS Utility
+- **Redux Toolkit**: State management
+- **Vitest & msw**: Testing framework for unit and integration tests.
+- **Husky**: Automatically lint your commit messages, code, and run tests upon committing or pushing.
+- [**React Flow**](https://reactflow.dev/): A customizable React component for building node-based editors and interactive diagrams 
+
+
+## Installation
+
+This project uses [Yarn](https://yarnpkg.com/) and requires Corepack to manage the package manager version. Before installing dependencies, ensure Corepack is enabled:
 
 ```bash
-npm run dev
-# or
-pnpm dev
+corepack enable
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- **Start the development server:**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+  ```bash
+  npm run dev
+  ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  Runs the app in development mode at `http://localhost:3000`.
 
-## Learn More
+- **Build and Start the production version:**
 
-To learn more about Next.js, take a look at the following resources:
+  ```bash
+  npm run build
+  ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  ```bash
+  npm run start
+  ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  Runs the app in production mode at `http://localhost:3000`.
+
+- **Run tests:**
+
+  ```bash
+  npm run test
+  ```
+
+
+- **Run depoy:**
+
+  ```bash
+  npm run deploy
+  ```
+
+  Build project and deploy to firebase hosting.
+
+
+## Folder Structure
+
+```bash
+├── public/                 # Static assets like index.html
+├── src/
+│   ├── components/         # Reusable UI components
+│   ├── contants/           # Reusable contants values
+│   ├── fonts/              # Store the font file assets
+│   ├── helper/             # Utility functions
+│   ├── pages/              # Page components for routing
+│   ├── redux/              # All Redux Store
+│   ├── services/           # API service files
+│   └── styles/             # Global or shared CSS/SCSS
+│   └── tests/              # Testing Library
+├── .env.example            # Environment variables
+├── .eslintrc.json          # ESLint configuration
+├── .prettierrc.js          # Prettier configuration
+├── tailwind.config.ts      # Tailwind Theme configuration
+└── package.json            # Dependencies and scripts
+```
+
+### Environment Variables
+
+You can configure environment-specific variables using `.env` files. Create a `.env` file in the root of your project and add your variables as needed:
+
+```bash
+NEXT_PUBLIC_API_ENDPOINT=https://api.example.com
+```
+
+These variables will be accessible via `process.env.NEXT_PUBLIC_*`.
+
+## Testing
+
+This boilerplate includes Jest and React Testing Library for writing unit and integration tests. You can write tests in files with a `.test.tsx` suffix.
+
+To run tests, simply use:
+
+```bash
+npm run test
+```
+
+or run coverage tests use:
+
+```bash
+npm run test:coverage
+```
+
+## Linting & Formatting
+
+We use ESLint for linting and Prettier for code formatting.
+
+---
+
+Happy Coding! 🎉
