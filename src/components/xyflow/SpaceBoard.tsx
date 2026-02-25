@@ -214,6 +214,7 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
           await boardService.saveBoard(boardId, nodes, edges);
           // Optional: Show success message
           alert('Board saved successfully!');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
           console.error('Error saving board:', error);
           if (error.code === 'permission-denied' || error.message.includes('permission-denied') || error.message.includes('Missing or insufficient permissions')) {
