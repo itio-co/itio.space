@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react'
 import { Button, Paper, TextField, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { login } from '@/redux/userSlice'
+import { login, loginWithGoogle } from '@/redux/userSlice'
 import { useAppDispatch } from '@/redux/store'
 
 const LoginForm = () => {
@@ -21,6 +21,15 @@ const LoginForm = () => {
       router.push('/')
     } catch (e) {
       console.log('error', e)
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    try {
+      await dispatch(loginWithGoogle())
+      router.push('/')
+    } catch (e) {
+      console.log('Google login error', e)
     }
   }
 
@@ -52,6 +61,11 @@ const LoginForm = () => {
           Login
         </Button>
       </form>
+      <div className="mt-4">
+          <Button variant="outlined" onClick={handleGoogleLogin} fullWidth>
+            Sign in with Google
+          </Button>
+      </div>
     </Paper>
   )
 }

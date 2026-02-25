@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import tw from 'twin.macro'
-import { RiStickyNoteAddLine } from 'react-icons/ri'
+import { RiStickyNoteAddLine, RiSaveLine } from 'react-icons/ri'
 
 import {
   ReactFlow,
@@ -21,6 +21,8 @@ import { defaultNodeTypes, nodeColor, ExtendControls } from '@/components/xyflow
 
 import { boards } from '@/constants/boards'
 import Button from '@/components/common/Button'
+import { BoardService } from '@/services/board/BoardService';
+import { FirebaseBoardRepository } from '@/adapters/board/FirebaseBoardRepository';
 
 // define the style of component
 const rfStyle = { backgroundColor: 'white' }
@@ -34,11 +36,14 @@ type SpaceBoardComponentProps = {
 }
 
 const AddStickyNoteButton = tw(Button)`block relative w-8 h-8 border-none text-black text-center`
+const SaveButton = tw(Button)`block relative w-8 h-8 border-none text-black text-center`
 
 type NewNodeValueType = {
   id: string
   type: string
 }
+
+const boardService = new BoardService(new FirebaseBoardRepository());
 
 // define the SpaceBoardComponent
 const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
@@ -62,25 +67,57 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
     []
   )
 
-  const getBoard = (id: string) => {
-    const board = boards[id]
-    if (!board) {
-      return null
-    }
-    return board
-  }
-
   // load initial nodes and edges from constants when the component mounts
   useEffect(() => {
-    const board = getBoard(boardId)
-    if (board === null) {
-      return
-    }
-    const { nodes: initNodes, edges: initialEdges } = board
-    setNodes(initNodes)
-    setEdges(initialEdges)
+    const fetchBoard = async () => {
+      if (!boardId) return;
 
-    setIsBoardExist(true)
+      try {
+        // Try to load from Firebase
+        const board = await boardService.getBoard(boardId);
+
+        if (board) {
+          setNodes(board.nodes);
+          setEdges(board.edges);
+          setIsBoardExist(true);
+        } else {
+           // Fallback to constants if not found in Firebase
+           const staticBoard = boards[boardId];
+           if (staticBoard) {
+             setNodes(staticBoard.nodes);
+             setEdges(staticBoard.edges);
+             setIsBoardExist(true);
+
+             // Seeding logic: if it's the demoboard and found locally but not in DB, create it in DB
+             if (boardId === 'demoboard') {
+                 try {
+                     await boardService.createBoard(boardId, staticBoard.nodes, staticBoard.edges);
+                     console.log('Seeded demoboard to database');
+                 } catch (seedError) {
+                     console.error('Failed to seed demoboard', seedError);
+                 }
+             }
+
+           } else {
+             // If not in constants either, show not found
+             setIsBoardExist(false);
+           }
+        }
+      } catch (error) {
+        console.error("Failed to load board", error);
+        // Fallback to constants on error
+        const staticBoard = boards[boardId];
+        if (staticBoard) {
+          setNodes(staticBoard.nodes);
+          setEdges(staticBoard.edges);
+          setIsBoardExist(true);
+        } else {
+            setIsBoardExist(false);
+        }
+      }
+    };
+
+    fetchBoard();
   }, [boardId])
 
   const handleNodeDoubleClick = (event: React.MouseEvent, node: Node) => {
@@ -171,6 +208,18 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
     }
   }
 
+  const handleSaveBoard = async () => {
+      if (!boardId) return;
+      try {
+          await boardService.saveBoard(boardId, nodes, edges);
+          // Optional: Show success message
+          alert('Board saved successfully!');
+      } catch (error) {
+          console.error('Error saving board:', error);
+          alert('Failed to save board.');
+      }
+  }
+
   return (
     <SpaceBoard id="flow">
       {!isBoardExist ? (
@@ -194,10 +243,13 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
           >
             <Panel position="top-left" className="flow">
               <div className="w-full h-full rounded-md bg-[whitesmoke]">
-                <div className="flex flex-col items-center">
-                  <AddStickyNoteButton onClick={() => startAddNote({ type: 'stickyNote' })}>
+                <div className="flex flex-col items-center gap-2 py-2">
+                  <AddStickyNoteButton onClick={() => startAddNote({ type: 'stickyNote' })} title="Add Sticky Note">
                     <RiStickyNoteAddLine size={28} />
                   </AddStickyNoteButton>
+                  <SaveButton onClick={handleSaveBoard} title="Save Board">
+                    <RiSaveLine size={28} />
+                  </SaveButton>
                 </div>
               </div>
             </Panel>
