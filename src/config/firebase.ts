@@ -1,7 +1,7 @@
 // src/config/firebase.ts
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDiCw_eNgh-QjoEHoAm_0wgyUYcp8j3xbg",
@@ -21,6 +21,9 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
 // Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app);
+// Set ignoreUndefinedProperties to true
+export const db = initializeFirestore(app, {
+  ignoreUndefinedProperties: true,
+});
 
 export default app;

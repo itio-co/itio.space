@@ -1,16 +1,22 @@
 import React, { FormEvent } from 'react'
 import { Button, Paper, TextField, Typography } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { login, loginWithGoogle } from '@/redux/userSlice'
 import { useAppDispatch } from '@/redux/store'
 
 const LoginForm = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const dispatch = useAppDispatch()
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+
+  const getRedirectPath = () => {
+    const redirect = searchParams.get('redirect')
+    return redirect || '/'
+  }
 
   const onSubmitForm = async (e: FormEvent<Element>) => {
     try {
@@ -18,7 +24,7 @@ const LoginForm = () => {
 
       await dispatch(login({ email, password }))
 
-      router.push('/')
+      router.push(getRedirectPath())
     } catch (e) {
       console.log('error', e)
     }
@@ -27,7 +33,7 @@ const LoginForm = () => {
   const handleGoogleLogin = async () => {
     try {
       await dispatch(loginWithGoogle())
-      router.push('/')
+      router.push(getRedirectPath())
     } catch (e) {
       console.log('Google login error', e)
     }
