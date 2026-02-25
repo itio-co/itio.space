@@ -8,10 +8,10 @@ type ButtonProps = {
   loading?: boolean
   className?: string
   onClick?: () => void
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button: React.FC<ButtonProps & PropsWithChildren> = (props) => {
-  const { variant, disabled, loading, children, className, onClick } = props
+  const { variant, disabled, loading, children, className, onClick, ...rest } = props
 
   return (
     <button
@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps & PropsWithChildren> = (props) => {
       )}
       disabled={disabled}
       onClick={loading ? undefined : onClick}
+      {...rest}
     >
       {loading ? <Loader className="mx-auto" /> : children}
     </button>
