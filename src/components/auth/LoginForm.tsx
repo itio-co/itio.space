@@ -14,7 +14,8 @@ const LoginForm = () => {
   const [password, setPassword] = React.useState('')
 
   const getRedirectPath = () => {
-    const redirect = searchParams.get('redirect')
+    // searchParams can be null during SSG/SSR or if not yet ready
+    const redirect = searchParams ? searchParams.get('redirect') : null
     return redirect || '/'
   }
 

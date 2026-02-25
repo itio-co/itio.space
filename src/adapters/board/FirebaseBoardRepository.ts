@@ -19,8 +19,10 @@ const sanitizeForFirestore = (obj: any): any => {
     // Try to extract text content if possible, or just save a placeholder string.
     // For now, let's just save a string representation to avoid the crash.
     // If it has children that are strings, use that.
-    if (obj.props && typeof obj.props.children === 'string') {
-        return obj.props.children;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const props = (obj as any).props;
+    if (props && typeof props.children === 'string') {
+        return props.children;
     }
     return "[React Component]";
   }
