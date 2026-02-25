@@ -87,6 +87,17 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
              setNodes(staticBoard.nodes);
              setEdges(staticBoard.edges);
              setIsBoardExist(true);
+
+             // Seeding logic: if it's the demoboard and found locally but not in DB, create it in DB
+             if (boardId === 'demoboard') {
+                 try {
+                     await boardService.createBoard(boardId, staticBoard.nodes, staticBoard.edges);
+                     console.log('Seeded demoboard to database');
+                 } catch (seedError) {
+                     console.error('Failed to seed demoboard', seedError);
+                 }
+             }
+
            } else {
              // If not in constants either, show not found
              setIsBoardExist(false);
