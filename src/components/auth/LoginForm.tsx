@@ -14,7 +14,7 @@ const LoginForm = () => {
   const [password, setPassword] = React.useState('')
 
   const getRedirectPath = () => {
-    const redirect = searchParams.get('redirect')
+    const redirect = searchParams?.get('redirect')
     return redirect || '/'
   }
 

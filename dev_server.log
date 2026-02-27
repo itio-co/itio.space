@@ -1,0 +1,12 @@
+yarn run v1.22.22
+$ next dev
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.2s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 12.5s (1410 modules)
+ ✓ Compiled in 7.1s (1391 modules)
+ GET /login/ 200 in 21361ms
