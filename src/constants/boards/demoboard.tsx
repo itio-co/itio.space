@@ -29,6 +29,7 @@ export const nodes: Node[] = [
     { id: '4', type: 'stickyNote', position: { x: 170, y: 100 }, data: { label: 'to' } },
     { id: '5', type: 'stickyNote', position: { x: 330, y: 100 }, data: { label: 'Dev Space' } },
     { id: 'hello-jules', type: 'stickyNote', position: { x: 490, y: 100 }, data: { label: 'Hello, Jules' } },
+    { id: 'hello-card', type: 'stickyNote', position: { x: 650, y: 100 }, data: { label: 'hello' } },
     { id: '6', type: 'stickyNote', position: { x: 10, y: 270 }, data: { label: 'This is a sticky note' } },
     { id: '7', type: 'stickyNote', position: { x: 170, y: 270 }, data: { label: 'Drag me around' } },
   
