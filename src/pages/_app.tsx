@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import clsx from 'clsx'
 import ReduxProvider from '@/redux/ReduxProvider'
-import { kuriousLoopedFont } from '@/fonts'
+import { kuriousLoopedFont, notoSansFont } from '@/fonts'
 import { MainLayout } from '../components/layout'
 import GlobalStyles from '@/styles/GlobalStyles'
 
@@ -23,7 +23,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   }, [])
 
   return (
-    <div className={clsx(kuriousLoopedFont.className)}>
+    <div className={clsx(kuriousLoopedFont.className, notoSansFont.variable)}>
       <ReduxProvider>
         <MainLayout>
           <GlobalStyles />
