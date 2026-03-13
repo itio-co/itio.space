@@ -4,6 +4,14 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import TwinkleStars from '@/components/common/TwinkleStars'
+import {
+  Constellation,
+  PlanetWithRings,
+  OrbitDiagram,
+  CometTrail,
+  NebulaCloud,
+  SpaceReticle,
+} from '@/components/common/SpaceLineArt'
 import UserProfile from '@/components/auth/UserProfile'
 import {
   HiOutlineLightBulb,
@@ -123,6 +131,22 @@ export default function Index() {
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6">
         <TwinkleStars />
+
+        {/* Space line art — left constellation */}
+        <div className="absolute left-0 top-0 h-full w-2/5 pointer-events-none select-none hidden lg:flex items-center opacity-35">
+          <Constellation className="w-full max-w-md" />
+        </div>
+
+        {/* Space line art — right planet */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-72 xl:w-80 pointer-events-none select-none hidden lg:block opacity-30">
+          <PlanetWithRings className="w-full" />
+        </div>
+
+        {/* Nebula glow behind hero text */}
+        <div className="absolute inset-0 pointer-events-none select-none opacity-40">
+          <NebulaCloud className="w-full h-full" />
+        </div>
+
         <div className="relative z-10 max-w-4xl mx-auto">
           <p className="text-violet-400 tracking-widest uppercase text-sm mb-6 font-medium">
             Itio Space
@@ -153,6 +177,11 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Comet divider */}
+      <div className="relative overflow-hidden h-16 pointer-events-none select-none opacity-60">
+        <CometTrail className="absolute top-1/2 -translate-y-1/2 w-full max-w-2xl left-1/2 -translate-x-1/2" />
+      </div>
 
       {/* ===== WHAT HAPPENS ===== */}
       <section className="relative py-32 px-6">
@@ -234,7 +263,7 @@ export default function Index() {
       </section>
 
       {/* ===== CIRCLE OF CONTRIBUTION ===== */}
-      <section className="relative py-32 px-6">
+      <section className="relative py-32 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto">
           <div className="scroll-reveal text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-6">
@@ -264,10 +293,19 @@ export default function Index() {
             <HiOutlineArrowPath className="text-violet-500/60 text-4xl animate-spin" style={{ animationDuration: '8s' }} />
           </div>
         </div>
+
+        {/* Decorative orbit diagram */}
+        <div className="absolute -right-16 top-1/2 -translate-y-1/2 w-64 opacity-12 pointer-events-none select-none hidden xl:block">
+          <OrbitDiagram className="w-full" />
+        </div>
+        {/* Decorative reticle */}
+        <div className="absolute -left-8 bottom-12 w-24 opacity-15 pointer-events-none select-none hidden lg:block">
+          <SpaceReticle className="w-full" />
+        </div>
       </section>
 
       {/* ===== SPACES FOR EXPLORATION ===== */}
-      <section className="relative py-32 px-6">
+      <section className="relative py-32 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto">
           <div className="scroll-reveal text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-6">
@@ -293,6 +331,11 @@ export default function Index() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Decorative constellation bottom-left */}
+        <div className="absolute -left-20 bottom-0 w-80 opacity-10 pointer-events-none select-none hidden xl:block">
+          <Constellation className="w-full" />
         </div>
       </section>
 
@@ -359,7 +402,7 @@ export default function Index() {
       </section>
 
       {/* ===== CTA / JOIN ===== */}
-      <section className="relative py-32 px-6">
+      <section className="relative py-32 px-6 overflow-hidden">
         <div className="max-w-3xl mx-auto text-center">
           <div className="scroll-reveal">
             <h2 className="text-4xl sm:text-5xl font-bold mb-8">
@@ -388,6 +431,15 @@ export default function Index() {
               Enter the Space
             </Link>
           </div>
+        </div>
+
+        {/* Decorative planet CTA */}
+        <div className="absolute -right-24 bottom-0 w-72 opacity-15 pointer-events-none select-none hidden xl:block">
+          <PlanetWithRings className="w-full" />
+        </div>
+        {/* Decorative reticle CTA */}
+        <div className="absolute left-8 top-12 w-20 opacity-18 pointer-events-none select-none hidden lg:block">
+          <SpaceReticle className="w-full" />
         </div>
       </section>
 
