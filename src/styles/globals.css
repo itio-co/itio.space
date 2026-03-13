@@ -131,14 +131,61 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -1; /* Ensures it stays behind other content */
-  background: black; /* Adjust background color as needed */
+  background: #08050f; /* Deep space background */
+  overflow: hidden;
 }
 
 .star {
   position: absolute;
-  width: 2px;
-  height: 2px;
   background: white;
   border-radius: 50%;
   animation: twinkle 2s infinite ease-in-out;
+}
+
+.shooting-star {
+  position: absolute;
+  left: -150px;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(167, 139, 250, 0.65),
+    rgba(221, 214, 254, 0.95)
+  );
+  border-radius: 2px;
+  animation: shoot 5s ease-in infinite;
+  opacity: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes shoot {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-22deg);
+    opacity: 0;
+    width: 0;
+  }
+  5% {
+    opacity: 1;
+    width: 80px;
+  }
+  65% {
+    opacity: 0.8;
+    width: 130px;
+  }
+  100% {
+    transform: translateX(90vw) translateY(32vh) rotate(-22deg);
+    opacity: 0;
+    width: 130px;
+  }
 }
