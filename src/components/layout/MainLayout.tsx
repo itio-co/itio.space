@@ -13,6 +13,11 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 
   const isHideHeader = NO_HEADER_ROUTES.includes(pathname) || isDynamicBoardRoute
   const isHideProfile = NO_PROFILE_ROUTES.includes(pathname)
+  const [isSetUserData, setIsSetUserData] = React.useState(true)
+
+  const NO_HEADER_ROUTES: string[] = ['/', '/login', '/itio-space/certificate', '/itio-space/dbml']
+
+  const isHideHeader = NO_HEADER_ROUTES.includes(pathname)
 
   return (
     <div className="relative">
