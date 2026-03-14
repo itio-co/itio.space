@@ -299,6 +299,155 @@ export const NebulaCloud = ({ className = '' }: { className?: string }) => (
   </svg>
 )
 
+/** Spiral galaxy with glowing core and two spiral arms */
+export const GalaxySpiral = ({ className = '' }: { className?: string }) => (
+  <svg
+    viewBox="0 0 500 500"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <defs>
+      <radialGradient id="galaxy-core" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="rgba(255, 245, 200, 0.95)" />
+        <stop offset="30%" stopColor="rgba(221, 214, 254, 0.8)" />
+        <stop offset="70%" stopColor="rgba(139, 92, 246, 0.4)" />
+        <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+      </radialGradient>
+      <radialGradient id="galaxy-halo" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="rgba(139, 92, 246, 0.08)" />
+        <stop offset="60%" stopColor="rgba(59, 130, 246, 0.04)" />
+        <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+      </radialGradient>
+      <filter id="core-glow">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+      <filter id="arm-glow">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+      <linearGradient id="arm1-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="rgba(221, 214, 254, 0.9)" />
+        <stop offset="50%" stopColor="rgba(139, 92, 246, 0.5)" />
+        <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+      </linearGradient>
+      <linearGradient id="arm2-grad" x1="100%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stopColor="rgba(221, 214, 254, 0.9)" />
+        <stop offset="50%" stopColor="rgba(99, 102, 241, 0.5)" />
+        <stop offset="100%" stopColor="rgba(99, 102, 241, 0)" />
+      </linearGradient>
+      <linearGradient id="arm3-grad" x1="100%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="rgba(167, 139, 250, 0.7)" />
+        <stop offset="100%" stopColor="rgba(167, 139, 250, 0)" />
+      </linearGradient>
+      <linearGradient id="arm4-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="rgba(167, 139, 250, 0.7)" />
+        <stop offset="100%" stopColor="rgba(167, 139, 250, 0)" />
+      </linearGradient>
+    </defs>
+
+    {/* Outer halo glow */}
+    <circle cx="250" cy="250" r="240" fill="url(#galaxy-halo)" />
+
+    {/* Arm 1 — main leading arm (clockwise upper) */}
+    <path
+      d="M 250 250 C 270 210, 310 180, 350 150 C 390 118, 430 95, 460 70"
+      stroke="url(#arm1-grad)" strokeWidth="12" filter="url(#arm-glow)"
+      strokeLinecap="round" opacity="0.7"
+    />
+    <path
+      d="M 250 250 C 270 210, 310 180, 350 150 C 390 118, 430 95, 460 70"
+      stroke="rgba(221, 214, 254, 0.6)" strokeWidth="3" strokeLinecap="round"
+    />
+    {/* Arm 1 — secondary filament */}
+    <path
+      d="M 250 250 C 280 200, 330 165, 375 130 C 415 100, 450 80, 480 55"
+      stroke="rgba(167, 139, 250, 0.3)" strokeWidth="5" strokeLinecap="round"
+    />
+
+    {/* Arm 2 — main trailing arm (clockwise lower) */}
+    <path
+      d="M 250 250 C 230 290, 190 320, 150 350 C 110 382, 70 405, 40 430"
+      stroke="url(#arm2-grad)" strokeWidth="12" filter="url(#arm-glow)"
+      strokeLinecap="round" opacity="0.7"
+    />
+    <path
+      d="M 250 250 C 230 290, 190 320, 150 350 C 110 382, 70 405, 40 430"
+      stroke="rgba(196, 181, 253, 0.6)" strokeWidth="3" strokeLinecap="round"
+    />
+
+    {/* Arm 3 — sweeping right arm */}
+    <path
+      d="M 250 250 C 300 240, 345 220, 385 195 C 425 168, 455 140, 475 110"
+      stroke="url(#arm3-grad)" strokeWidth="8" strokeLinecap="round" opacity="0.45"
+    />
+
+    {/* Arm 4 — sweeping left arm */}
+    <path
+      d="M 250 250 C 200 260, 155 280, 115 305 C 75 332, 45 360, 25 390"
+      stroke="url(#arm4-grad)" strokeWidth="8" strokeLinecap="round" opacity="0.45"
+    />
+
+    {/* Arm 5 — upper-left */}
+    <path
+      d="M 250 250 C 220 215, 185 185, 148 162 C 110 138, 72 120, 42 98"
+      stroke="rgba(139, 92, 246, 0.35)" strokeWidth="6" strokeLinecap="round"
+    />
+
+    {/* Arm 6 — lower-right */}
+    <path
+      d="M 250 250 C 280 285, 315 315, 352 338 C 390 362, 428 380, 458 402"
+      stroke="rgba(139, 92, 246, 0.35)" strokeWidth="6" strokeLinecap="round"
+    />
+
+    {/* Stars scattered along arms */}
+    <g filter="url(#arm-glow)">
+      <circle cx="340" cy="165" r="2.5" fill="rgba(221, 214, 254, 0.9)" />
+      <circle cx="400" cy="115" r="1.8" fill="rgba(196, 181, 253, 0.8)" />
+      <circle cx="455" cy="75" r="1.4" fill="rgba(167, 139, 250, 0.7)" />
+      <circle cx="160" cy="335" r="2.2" fill="rgba(221, 214, 254, 0.9)" />
+      <circle cx="95" cy="395" r="1.6" fill="rgba(196, 181, 253, 0.7)" />
+      <circle cx="45" cy="428" r="1.2" fill="rgba(167, 139, 250, 0.6)" />
+      <circle cx="370" cy="200" r="1.5" fill="rgba(196, 181, 253, 0.7)" />
+      <circle cx="430" cy="150" r="1.3" fill="rgba(167, 139, 250, 0.65)" />
+      <circle cx="120" cy="305" r="1.5" fill="rgba(196, 181, 253, 0.7)" />
+      <circle cx="65" cy="365" r="1.2" fill="rgba(167, 139, 250, 0.6)" />
+      {/* Upper-left arm stars */}
+      <circle cx="162" cy="180" r="1.8" fill="rgba(196, 181, 253, 0.75)" />
+      <circle cx="100" cy="135" r="1.4" fill="rgba(167, 139, 250, 0.65)" />
+      <circle cx="55" cy="105" r="1.1" fill="rgba(139, 92, 246, 0.6)" />
+      {/* Lower-right arm stars */}
+      <circle cx="340" cy="322" r="1.8" fill="rgba(196, 181, 253, 0.75)" />
+      <circle cx="402" cy="372" r="1.4" fill="rgba(167, 139, 250, 0.65)" />
+      <circle cx="450" cy="398" r="1.1" fill="rgba(139, 92, 246, 0.6)" />
+    </g>
+
+    {/* Inner bar connecting the arms */}
+    <ellipse cx="250" cy="250" rx="58" ry="18"
+      stroke="rgba(167, 139, 250, 0.35)" strokeWidth="1" fill="none"
+      transform="rotate(-40, 250, 250)" />
+
+    {/* Galaxy core glow layers */}
+    <circle cx="250" cy="250" r="55" fill="rgba(139, 92, 246, 0.12)" />
+    <circle cx="250" cy="250" r="35" fill="rgba(167, 139, 250, 0.22)" filter="url(#core-glow)" />
+    <circle cx="250" cy="250" r="20" fill="rgba(221, 214, 254, 0.6)" filter="url(#core-glow)" />
+    <circle cx="250" cy="250" r="10" fill="url(#galaxy-core)" />
+    <circle cx="250" cy="250" r="5" fill="rgba(255, 255, 255, 0.95)" />
+
+    {/* Surrounding field stars */}
+    <g fill="rgba(255, 255, 255, 0.5)">
+      <circle cx="80" cy="60" r="1" /><circle cx="420" cy="50" r="0.9" />
+      <circle cx="30" cy="180" r="0.8" /><circle cx="470" cy="200" r="1.1" />
+      <circle cx="18" cy="310" r="0.9" /><circle cx="482" cy="320" r="0.8" />
+      <circle cx="60" cy="460" r="1" /><circle cx="445" cy="455" r="0.9" />
+      <circle cx="190" cy="22" r="0.8" /><circle cx="310" cy="18" r="1" />
+      <circle cx="175" cy="478" r="0.9" /><circle cx="328" cy="482" r="0.8" />
+    </g>
+  </svg>
+)
+
 /** Simple crosshair / targeting reticle */
 export const SpaceReticle = ({ className = '' }: { className?: string }) => (
   <svg
