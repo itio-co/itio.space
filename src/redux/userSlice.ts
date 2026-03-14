@@ -6,6 +6,8 @@ import { signInWithPopup } from 'firebase/auth'
 const initialState = {
   email: '',
   token: '',
+  displayName: '',
+  photoURL: '',
 }
 
 export const loginWithGoogle = createAsyncThunk(
@@ -18,7 +20,9 @@ export const loginWithGoogle = createAsyncThunk(
 
       const userData = {
         email: user.email || '',
-        token
+        token,
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || '',
       }
 
       localStorage.setItem('user', JSON.stringify(userData))
@@ -38,7 +42,12 @@ export const checkUserDataFromLocalStorage = createAsyncThunk(
 
     if (userLocalStorage) {
       const userData = JSON.parse(userLocalStorage)
-      return userData
+      return {
+        email: userData.email || '',
+        token: userData.token || '',
+        displayName: userData.displayName || '',
+        photoURL: userData.photoURL || '',
+      }
     }
     return initialState
   },
@@ -63,13 +72,13 @@ export const userSlice = createSlice({
     builder
       .addCase(
         loginWithGoogle.fulfilled,
-        (_, action: PayloadAction<{ email: string; token: string }>) => {
+        (_, action: PayloadAction<{ email: string; token: string; displayName: string; photoURL: string }>) => {
           return action.payload
         }
       )
       .addCase(
         checkUserDataFromLocalStorage.fulfilled,
-        (_, action: PayloadAction<{ email: string; token: string }>) => {
+        (_, action: PayloadAction<{ email: string; token: string; displayName: string; photoURL: string }>) => {
            return action.payload
         }
       )
