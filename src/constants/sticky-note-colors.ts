@@ -19,6 +19,13 @@ export const StickyNoteColors: StickyNoteColorsType[]  = [
     backgroundColor: '#d9cded'
   },
 
+  // Indigo 57, 73, 171 -> 197, 202, 233
+  {
+    name: 'indigo',
+    color: '#3949ab',
+    backgroundColor: '#c5cae9'
+  },
+
   // 13: BrightBlue 63, 81, 181 -> 207, 211, 236
   {
     name: 'brightBlue',
@@ -166,12 +173,6 @@ export const StickyNoteColors: StickyNoteColorsType[]  = [
     backgroundColor: '#f7f7f7'
   },
 
-  // 46: White 255, 255, 255 -> 255, 255, 255
-  {
-    name: 'white',
-    color: '#ffffff',
-    backgroundColor: '#ffffff'
-  },
 ]
 
 
