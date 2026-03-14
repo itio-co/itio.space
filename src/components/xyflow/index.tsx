@@ -24,7 +24,7 @@ export const nodeColor = (node: Node) => {
     case 'output':
       return '#6865A5';
     case 'stickyNote':
-      return StickyNote.nodeColor;
+      return StickyNote.nodeColor(node);
     default:
       return '#ff0072';
   }
