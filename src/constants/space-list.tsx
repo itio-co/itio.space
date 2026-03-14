@@ -22,4 +22,8 @@ export const spaceList: Space[] = [
         id: 'space4',
         name: 'My Space 4',
     },
+    {
+        id: 'langchain',
+        name: 'LangChain Pipeline Builder',
+    },
 ]
