@@ -295,11 +295,11 @@ export default function Index() {
         </div>
 
         {/* Decorative orbit diagram */}
-        <div className="absolute -right-16 top-1/2 -translate-y-1/2 w-64 opacity-12 pointer-events-none select-none hidden xl:block">
+        <div className="absolute -right-16 top-1/2 -translate-y-1/2 w-64 pointer-events-none select-none hidden xl:block" style={{ opacity: 0.12 }}>
           <OrbitDiagram className="w-full" />
         </div>
         {/* Decorative reticle */}
-        <div className="absolute -left-8 bottom-12 w-24 opacity-15 pointer-events-none select-none hidden lg:block">
+        <div className="absolute -left-8 bottom-12 w-24 pointer-events-none select-none hidden lg:block" style={{ opacity: 0.15 }}>
           <SpaceReticle className="w-full" />
         </div>
       </section>
@@ -434,17 +434,23 @@ export default function Index() {
         </div>
 
         {/* Decorative planet CTA */}
-        <div className="absolute -right-24 bottom-0 w-72 opacity-15 pointer-events-none select-none hidden xl:block">
+        <div className="absolute -right-24 bottom-0 w-72 pointer-events-none select-none hidden xl:block" style={{ opacity: 0.15 }}>
           <PlanetWithRings className="w-full" />
         </div>
         {/* Decorative reticle CTA */}
-        <div className="absolute left-8 top-12 w-20 opacity-18 pointer-events-none select-none hidden lg:block">
+        <div className="absolute left-8 top-12 w-20 pointer-events-none select-none hidden lg:block" style={{ opacity: 0.18 }}>
           <SpaceReticle className="w-full" />
         </div>
       </section>
 
-      {/* Footer spacer */}
-      <div className="h-20" />
+      {/* Footer */}
+      <footer className="relative py-8 px-6 border-t border-white/5">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-600 text-sm">
+          <span>Itio Space</span>
+          <span className="font-mono text-gray-700 tracking-wide">v0.2.0</span>
+          <span>Built for the Itionian way</span>
+        </div>
+      </footer>
     </main>
   )
 }
