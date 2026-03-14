@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 
 import userReducer from './userSlice'
+import langchainReducer from './langchainSlice'
 
 const rootReducer = combineReducers({
   user: userReducer,
+  langchain: langchainReducer,
 })
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {
@@ -22,6 +24,7 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
 
       const newRootReducer = combineReducers({
         user: nextUserReducer,
+        langchain: langchainReducer,
       })
       store.replaceReducer(newRootReducer)
     })

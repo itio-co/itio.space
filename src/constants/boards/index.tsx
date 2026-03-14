@@ -1,5 +1,6 @@
 import { Node, Edge }from '@xyflow/react';
 import * as demoBoard from './demoboard';
+import * as langchainBoard from './langchain-board';
 
 const emptyBoard = { nodes: [] as Node[], edges: [] as Edge[] };
 
@@ -12,4 +13,5 @@ export const boards: BoardDataType = {
   'space2': emptyBoard,
   'space3': emptyBoard,
   'space4': emptyBoard,
+  'langchain': langchainBoard,
 };

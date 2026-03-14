@@ -23,6 +23,10 @@ export const spaceList: Space[] = [
         name: 'My Space 4',
     },
     {
+        id: 'langchain',
+        name: 'LangChain Pipeline Builder',
+    },
+    {
         id: 'dbml',
         name: 'DBML Playground',
     },
