@@ -5,27 +5,8 @@ import { signInWithPopup } from 'firebase/auth'
 
 const initialState = {
   email: '',
-  password: '',
   token: '',
 }
-
-export const login = createAsyncThunk(
-  'user/login',
-  async (body: { email: string; password: string }) => {
-    // eslint-disable-next-line no-useless-catch
-    try {
-      const token = btoa(`${body.email}:${body.password}`)
-
-      const userData = { email: body.email, password: body.password, token }
-
-      localStorage.setItem('user', JSON.stringify(userData))
-
-      return userData
-    } catch (error) {
-      throw error
-    }
-  },
-)
 
 export const loginWithGoogle = createAsyncThunk(
   'user/loginWithGoogle',
@@ -37,7 +18,6 @@ export const loginWithGoogle = createAsyncThunk(
 
       const userData = {
         email: user.email || '',
-        password: '', // Password is not applicable for Google Auth
         token
       }
 
@@ -53,16 +33,12 @@ export const loginWithGoogle = createAsyncThunk(
 
 export const checkUserDataFromLocalStorage = createAsyncThunk(
   'user/checkUserDataFromLocalStorage',
-  async (_, { dispatch }) => {
-    // eslint-disable-next-line no-useless-catch
+  async () => {
     try {
       const userLocalStorage = localStorage.getItem('user')
 
       if (userLocalStorage) {
         const userData = JSON.parse(userLocalStorage)
-        // If it was a google login (no password), we might want to re-verify or just load state
-        // For simplicity in this demo, we just restore the state.
-        // If we wanted to really re-auth, we'd rely on onAuthStateChanged from firebase
         return userData
       }
       return initialState
@@ -90,21 +66,14 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        login.fulfilled,
-        (_, action: PayloadAction<{ email: string; password: string; token: string }>) => {
-          return action.payload
-        },
-      )
-      .addCase(
         loginWithGoogle.fulfilled,
-        (_, action: PayloadAction<{ email: string; password: string; token: string }>) => {
+        (_, action: PayloadAction<{ email: string; token: string }>) => {
           return action.payload
         }
       )
       .addCase(
         checkUserDataFromLocalStorage.fulfilled,
-        (_, action: PayloadAction<{ email: string; password: string; token: string }>) => {
-           // checkUserDataFromLocalStorage might return initialState if nothing found
+        (_, action: PayloadAction<{ email: string; token: string }>) => {
            return action.payload
         }
       )
