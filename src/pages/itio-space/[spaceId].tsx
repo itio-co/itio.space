@@ -4,23 +4,27 @@ import { useRouter } from 'next/router'
 import SpaceBoard from '@/components/xyflow/SpaceBoard'
 import LangChainBoard from '@/components/xyflow/LangChainBoard'
 import UserProfile from '@/components/auth/UserProfile'
+import { spaceList, type BoardType } from '@/constants/space-list'
 
 export default function DemoBoard() {
   const [boardId, setBoardId] = useState('' as string)
+  const [boardType, setBoardType] = useState<BoardType>('space')
   const router = useRouter()
 
   useEffect(() => {
-    setBoardId(router.query.spaceId as string)
-  }, [router])
+    const spaceId = router.query.spaceId as string
+    setBoardId(spaceId)
 
-  const isLangChain = boardId === 'langchain'
+    const space = spaceList.find((s) => s.id === spaceId)
+    setBoardType(space?.boardType ?? 'space')
+  }, [router])
 
   return (
     <>
       <div className="absolute top-4 right-4 z-50">
         <UserProfile />
       </div>
-      {isLangChain ? (
+      {boardType === 'langchain' ? (
         <LangChainBoard boardId={boardId} />
       ) : (
         <SpaceBoard boardId={boardId} />
