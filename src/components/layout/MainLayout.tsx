@@ -1,16 +1,18 @@
 import React, { PropsWithChildren } from 'react'
 import type { FC } from 'react'
-import { useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
-import { RootState, useAppDispatch } from '@/redux/store'
+import UserProfile from '@/components/auth/UserProfile'
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname() || '/'
 
-  const dispatch = useAppDispatch()
+  const NO_HEADER_ROUTES = ['/', '/login', '/itio-space/certificate']
+  const NO_PROFILE_ROUTES = ['/login', '/itio-space/certificate']
 
-  const { email } = useSelector((state: RootState) => state.user)
+  const isDynamicBoardRoute = /^\/itio-space\/[^/]+$/.test(pathname) && pathname !== '/itio-space'
 
+  const isHideHeader = NO_HEADER_ROUTES.includes(pathname) || isDynamicBoardRoute
+  const isHideProfile = NO_PROFILE_ROUTES.includes(pathname)
   const [isSetUserData, setIsSetUserData] = React.useState(true)
 
   const NO_HEADER_ROUTES: string[] = ['/', '/login', '/itio-space/certificate', '/itio-space/dbml']
@@ -20,12 +22,17 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="relative">
       {!isHideHeader && (
-        <header className="flex justify-between border-b px-5 py-5">
-          <div className="font-bold">Welcome to ITIO Space</div>
-          <div>{email}</div>
+        <header className="flex justify-between items-center border-b border-white/10 px-5 py-3">
+          <div className="font-bold text-white">Welcome to ITIO Space</div>
+          <UserProfile />
         </header>
       )}
-      <div>{isSetUserData ? children : null}</div>
+      {isHideHeader && !isHideProfile && (
+        <div className="fixed top-4 right-4 z-50">
+          <UserProfile />
+        </div>
+      )}
+      <div>{children}</div>
     </div>
   )
 }

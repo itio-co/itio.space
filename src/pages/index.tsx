@@ -13,7 +13,6 @@ import {
   SpaceReticle,
   GalaxySpiral,
 } from '@/components/common/SpaceLineArt'
-import UserProfile from '@/components/auth/UserProfile'
 import {
   HiOutlineLightBulb,
   HiOutlineCode,
@@ -141,11 +140,6 @@ export default function Index() {
 
   return (
     <main className="main" ref={pageRef}>
-      {/* User profile */}
-      <div className="fixed top-4 right-4 z-50">
-        <UserProfile />
-      </div>
-
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
         <TwinkleStars />
