@@ -34,17 +34,13 @@ export const loginWithGoogle = createAsyncThunk(
 export const checkUserDataFromLocalStorage = createAsyncThunk(
   'user/checkUserDataFromLocalStorage',
   async () => {
-    try {
-      const userLocalStorage = localStorage.getItem('user')
+    const userLocalStorage = localStorage.getItem('user')
 
-      if (userLocalStorage) {
-        const userData = JSON.parse(userLocalStorage)
-        return userData
-      }
-      return initialState
-    } catch (error) {
-      throw error
+    if (userLocalStorage) {
+      const userData = JSON.parse(userLocalStorage)
+      return userData
     }
+    return initialState
   },
 )
 
