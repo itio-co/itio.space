@@ -447,7 +447,7 @@ export default function Index() {
       <footer className="relative py-8 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-600 text-sm">
           <span>Itio Space</span>
-          <span className="font-mono text-gray-700 tracking-wide">v0.2.0</span>
+          <span className="font-mono text-gray-700 tracking-wide">v0.2.1</span>
           <span>Built for the Itionian way</span>
         </div>
       </footer>
