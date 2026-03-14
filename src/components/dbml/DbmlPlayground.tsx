@@ -14,13 +14,13 @@ const DbmlPlayground: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>([])
   const [edges, setEdges] = useState<Edge[]>([])
   const [parseError, setParseError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<'editor' | 'diagram'>('editor')
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const parseAndUpdate = useCallback((text: string) => {
     const result = dbmlToReactFlow(text)
     if (result.error) {
       setParseError(result.error)
-      // Keep last valid diagram visible
     } else {
       setParseError(null)
       setNodes(result.nodes)
@@ -28,12 +28,10 @@ const DbmlPlayground: React.FC = () => {
     }
   }, [])
 
-  // Parse on initial load
   useEffect(() => {
     parseAndUpdate(defaultDbml)
   }, [parseAndUpdate])
 
-  // Debounced parsing on text change
   const handleChange = useCallback(
     (value: string) => {
       setDbmlText(value)
@@ -45,13 +43,62 @@ const DbmlPlayground: React.FC = () => {
     [parseAndUpdate],
   )
 
+  const statsText = `${nodes.length} table${nodes.length !== 1 ? 's' : ''} \u00B7 ${edges.length} relation${edges.length !== 1 ? 's' : ''}`
+
+  const errorBanner = parseError ? (
+    <div
+      className="px-4 py-2 text-xs font-mono border-t border-red-500/30"
+      style={{
+        background: 'rgba(239, 68, 68, 0.15)',
+        color: '#f87171',
+        maxHeight: 80,
+        overflow: 'auto',
+      }}
+    >
+      {parseError}
+    </div>
+  ) : null
+
   return (
-    <div className="flex h-screen w-screen" style={{ background: '#0a0a1a' }}>
-      {/* Left panel: Editor */}
-      <div className="flex flex-col" style={{ width: '40%', minWidth: 300 }}>
-        {/* Editor header */}
+    <div className="flex flex-col md:flex-row h-screen w-screen" style={{ background: '#0a0a1a' }}>
+      {/* Mobile tab bar — hidden on md+ */}
+      <div
+        className="flex md:hidden border-b border-white/10 shrink-0"
+        style={{ background: 'rgba(15, 15, 30, 0.95)' }}
+      >
+        <button
+          className="flex-1 px-4 py-2.5 text-sm font-semibold transition-colors"
+          style={{
+            color: activeTab === 'editor' ? '#818cf8' : '#64748b',
+            borderBottom: activeTab === 'editor' ? '2px solid #818cf8' : '2px solid transparent',
+            background: 'transparent',
+          }}
+          onClick={() => setActiveTab('editor')}
+        >
+          Editor
+        </button>
+        <button
+          className="flex-1 px-4 py-2.5 text-sm font-semibold transition-colors"
+          style={{
+            color: activeTab === 'diagram' ? '#818cf8' : '#64748b',
+            borderBottom: activeTab === 'diagram' ? '2px solid #818cf8' : '2px solid transparent',
+            background: 'transparent',
+          }}
+          onClick={() => setActiveTab('diagram')}
+        >
+          Diagram
+          <span className="ml-2 text-[10px] text-slate-600">{statsText}</span>
+        </button>
+      </div>
+
+      {/* Editor panel */}
+      <div
+        className={`flex-col overflow-hidden md:flex ${activeTab === 'editor' ? 'flex' : 'hidden'}`}
+        style={{ flex: '1 1 0%' }}
+      >
+        {/* Desktop editor header — hidden on mobile */}
         <div
-          className="flex items-center justify-between px-4 py-2 border-b border-white/10"
+          className="hidden md:flex items-center justify-between px-4 py-2 border-b border-white/10 shrink-0"
           style={{ background: 'rgba(15, 15, 30, 0.95)' }}
         >
           <div className="flex items-center gap-2">
@@ -61,52 +108,36 @@ const DbmlPlayground: React.FC = () => {
           <span className="text-slate-600 text-[10px] font-mono">dbml v2</span>
         </div>
 
-        {/* Editor */}
         <div className="flex-1 overflow-hidden">
           <DbmlEditor value={dbmlText} onChange={handleChange} />
         </div>
-
-        {/* Error banner */}
-        {parseError && (
-          <div
-            className="px-4 py-2 text-xs font-mono border-t border-red-500/30"
-            style={{
-              background: 'rgba(239, 68, 68, 0.15)',
-              color: '#f87171',
-              maxHeight: 80,
-              overflow: 'auto',
-            }}
-          >
-            {parseError}
-          </div>
-        )}
+        {errorBanner}
       </div>
 
-      {/* Divider */}
-      <div className="w-px bg-white/10" />
+      {/* Desktop divider — hidden on mobile */}
+      <div className="hidden md:block w-px bg-white/10" />
 
-      {/* Right panel: Diagram */}
-      <div className="flex flex-col flex-1">
-        {/* Diagram header */}
+      {/* Diagram panel */}
+      <div
+        className={`flex-col overflow-hidden md:flex ${activeTab === 'diagram' ? 'flex' : 'hidden'}`}
+        style={{ flex: '1.5 1 0%' }}
+      >
+        {/* Desktop diagram header — hidden on mobile */}
         <div
-          className="flex items-center justify-between px-4 py-2 border-b border-white/10"
+          className="hidden md:flex items-center justify-between px-4 py-2 border-b border-white/10 shrink-0"
           style={{ background: 'rgba(15, 15, 30, 0.95)' }}
         >
           <div className="flex items-center gap-2">
             <span className="text-indigo-400 font-semibold text-sm">Diagram</span>
             <span className="text-slate-500 text-xs">Preview</span>
           </div>
-          <span className="text-slate-600 text-[10px]">
-            {nodes.length} table{nodes.length !== 1 ? 's' : ''} &middot;{' '}
-            {edges.length} relation{edges.length !== 1 ? 's' : ''}
-          </span>
+          <span className="text-slate-600 text-[10px]">{statsText}</span>
         </div>
 
-        {/* Diagram */}
         <div className="flex-1">
           {nodes.length === 0 && !parseError ? (
             <div className="flex items-center justify-center h-full text-slate-500 text-sm">
-              Write DBML on the left to see the diagram
+              Write DBML to see the diagram
             </div>
           ) : (
             <DbmlDiagram nodes={nodes} edges={edges} />
