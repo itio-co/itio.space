@@ -216,11 +216,11 @@ body {
 }
 
 /* ========================================
-   Miro-like Board UI Styles
+   Board UI Styles
    ======================================== */
 
 /* Board layout */
-.miro-board {
+.board-layout {
   width: 100vw;
   height: 100dvh;
   display: flex;
@@ -229,20 +229,20 @@ body {
   background: #f5f5f5;
 }
 
-.miro-board__canvas {
+.board-layout__canvas {
   flex: 1;
   display: flex;
   position: relative;
   overflow: hidden;
 }
 
-.miro-board__flow {
+.board-layout__flow {
   flex: 1;
   position: relative;
 }
 
 /* ---- Header ---- */
-.miro-header {
+.board-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -254,13 +254,13 @@ body {
   flex-shrink: 0;
 }
 
-.miro-header__left {
+.board-header__left {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.miro-header__logo {
+.board-header__logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -268,20 +268,20 @@ body {
   height: 32px;
 }
 
-.miro-header__board-name {
+.board-header__board-name {
   font-size: 14px;
   font-weight: 600;
   color: #1a1a2e;
   white-space: nowrap;
 }
 
-.miro-header__right {
+.board-header__right {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.miro-header__icon-btn {
+.board-header__icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -295,11 +295,11 @@ body {
   transition: background 0.15s;
 }
 
-.miro-header__icon-btn:hover {
+.board-header__icon-btn:hover {
   background: #f0f0f0;
 }
 
-.miro-header__present-btn {
+.board-header__present-btn {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -314,11 +314,11 @@ body {
   transition: background 0.15s;
 }
 
-.miro-header__present-btn:hover {
+.board-header__present-btn:hover {
   background: #f5f5f5;
 }
 
-.miro-header__share-btn {
+.board-header__share-btn {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -333,12 +333,12 @@ body {
   transition: background 0.15s;
 }
 
-.miro-header__share-btn:hover {
+.board-header__share-btn:hover {
   background: #3350e0;
 }
 
 /* ---- Left Toolbar ---- */
-.miro-toolbar {
+.board-toolbar {
   position: absolute;
   left: 12px;
   top: 50%;
@@ -351,7 +351,7 @@ body {
   height: calc(100% - 24px);
 }
 
-.miro-toolbar__tools {
+.board-toolbar__tools {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -363,7 +363,7 @@ body {
   pointer-events: auto;
 }
 
-.miro-toolbar__btn {
+.board-toolbar__btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -377,40 +377,40 @@ body {
   transition: all 0.15s;
 }
 
-.miro-toolbar__btn:hover {
+.board-toolbar__btn:hover {
   background: #f0f0f0;
   color: #1a1a2e;
 }
 
-.miro-toolbar__btn--active {
+.board-toolbar__btn--active {
   background: #e8eaff;
   color: #4262ff;
 }
 
-.miro-toolbar__btn--active:hover {
+.board-toolbar__btn--active:hover {
   background: #dde0ff;
   color: #4262ff;
 }
 
-.miro-toolbar__btn--add {
+.board-toolbar__btn--add {
   background: #4262ff;
   color: #fff;
   border-radius: 8px;
 }
 
-.miro-toolbar__btn--add:hover {
+.board-toolbar__btn--add:hover {
   background: #3350e0;
   color: #fff;
 }
 
-.miro-toolbar__separator {
+.board-toolbar__separator {
   width: 24px;
   height: 1px;
   background: #e6e6e6;
   margin: 4px 0;
 }
 
-.miro-toolbar__history {
+.board-toolbar__history {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -423,7 +423,7 @@ body {
 }
 
 /* ---- Zoom Controls ---- */
-.miro-zoom {
+.board-zoom {
   display: flex;
   align-items: center;
   gap: 0;
@@ -433,7 +433,7 @@ body {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
-.miro-zoom__btn {
+.board-zoom__btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -447,12 +447,12 @@ body {
   transition: all 0.15s;
 }
 
-.miro-zoom__btn:hover {
+.board-zoom__btn:hover {
   background: #f0f0f0;
   color: #1a1a2e;
 }
 
-.miro-zoom__percentage {
+.board-zoom__percentage {
   min-width: 42px;
   height: 28px;
   border: none;
@@ -466,12 +466,12 @@ body {
   border-radius: 4px;
 }
 
-.miro-zoom__percentage:hover {
+.board-zoom__percentage:hover {
   background: #f0f0f0;
   color: #1a1a2e;
 }
 
-.miro-zoom__separator {
+.board-zoom__separator {
   width: 1px;
   height: 20px;
   background: #e6e6e6;
@@ -479,6 +479,6 @@ body {
 }
 
 /* Hide default React Flow controls since we use custom ones */
-.miro-board .react-flow__controls {
+.board-layout .react-flow__controls {
   display: none;
 }

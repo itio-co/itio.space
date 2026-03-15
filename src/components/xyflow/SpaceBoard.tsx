@@ -16,9 +16,9 @@ import {
 
 import '@xyflow/react/dist/style.css'
 import { defaultNodeTypes, nodeColor } from '@/components/xyflow/index'
-import MiroToolbar from '@/components/xyflow/MiroToolbar'
-import MiroHeader from '@/components/xyflow/MiroHeader'
-import MiroZoomControls from '@/components/xyflow/MiroZoomControls'
+import BoardToolbar from '@/components/xyflow/BoardToolbar'
+import BoardHeader from '@/components/xyflow/BoardHeader'
+import BoardZoomControls from '@/components/xyflow/BoardZoomControls'
 
 import { boards } from '@/constants/boards'
 import { BoardService } from '@/services/board/BoardService';
@@ -208,18 +208,18 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 
   return (
-    <div className="miro-board" id="flow">
+    <div className="board-layout" id="flow">
       {!isBoardExist ? (
         <div className="text-center p-4">Board not found</div>
       ) : (
         <>
-          <MiroHeader boardName={boardDisplayName} onSave={handleSaveBoard} />
-          <div className="miro-board__canvas">
-            <MiroToolbar
+          <BoardHeader boardName={boardDisplayName} onSave={handleSaveBoard} />
+          <div className="board-layout__canvas">
+            <BoardToolbar
               onAddStickyNote={() => startAddNote({ type: 'stickyNote' })}
               activeTool={newNodeValue ? 'stickyNote' : 'select'}
             />
-            <div className="miro-board__flow">
+            <div className="board-layout__flow">
               <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -234,7 +234,7 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
                 proOptions={{ hideAttribution: true }}
               >
                 <Panel position="bottom-right">
-                  <MiroZoomControls />
+                  <BoardZoomControls />
                 </Panel>
                 <MiniMap
                   nodeColor={nodeColor}

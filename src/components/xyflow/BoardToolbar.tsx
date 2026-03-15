@@ -21,12 +21,12 @@ type ToolItem = {
   active?: boolean
 }
 
-type MiroToolbarProps = {
+type BoardToolbarProps = {
   onAddStickyNote: () => void
   activeTool?: string
 }
 
-const MiroToolbar: React.FC<MiroToolbarProps> = ({ onAddStickyNote, activeTool }) => {
+const BoardToolbar: React.FC<BoardToolbarProps> = ({ onAddStickyNote, activeTool }) => {
   const tools: ToolItem[] = [
     { id: 'select', icon: <RiCursorLine size={20} />, label: 'Select' },
     { id: 'stickyNote', icon: <RiStickyNoteAddLine size={20} />, label: 'Sticky Note', onClick: onAddStickyNote },
@@ -40,13 +40,13 @@ const MiroToolbar: React.FC<MiroToolbarProps> = ({ onAddStickyNote, activeTool }
   ]
 
   return (
-    <div className="miro-toolbar">
+    <div className="board-toolbar">
       {/* Main tools */}
-      <div className="miro-toolbar__tools">
+      <div className="board-toolbar__tools">
         {tools.map((tool) => (
           <button
             key={tool.id}
-            className={`miro-toolbar__btn ${activeTool === tool.id ? 'miro-toolbar__btn--active' : ''}`}
+            className={`board-toolbar__btn ${activeTool === tool.id ? 'board-toolbar__btn--active' : ''}`}
             title={tool.label}
             onClick={tool.onClick}
           >
@@ -54,19 +54,19 @@ const MiroToolbar: React.FC<MiroToolbarProps> = ({ onAddStickyNote, activeTool }
           </button>
         ))}
         {/* Separator */}
-        <div className="miro-toolbar__separator" />
+        <div className="board-toolbar__separator" />
         {/* More / Add */}
-        <button className="miro-toolbar__btn miro-toolbar__btn--add" title="More tools">
+        <button className="board-toolbar__btn board-toolbar__btn--add" title="More tools">
           <RiAddLine size={20} />
         </button>
       </div>
 
       {/* Undo/Redo at bottom */}
-      <div className="miro-toolbar__history">
-        <button className="miro-toolbar__btn" title="Undo">
+      <div className="board-toolbar__history">
+        <button className="board-toolbar__btn" title="Undo">
           <RiArrowGoBackLine size={18} />
         </button>
-        <button className="miro-toolbar__btn" title="Redo">
+        <button className="board-toolbar__btn" title="Redo">
           <RiArrowGoForwardLine size={18} />
         </button>
       </div>
@@ -74,4 +74,4 @@ const MiroToolbar: React.FC<MiroToolbarProps> = ({ onAddStickyNote, activeTool }
   )
 }
 
-export default MiroToolbar
+export default BoardToolbar
