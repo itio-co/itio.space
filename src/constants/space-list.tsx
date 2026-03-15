@@ -37,5 +37,6 @@ export const spaceList: Space[] = [
     {
         id: 'dbml',
         name: 'DBML Playground',
+        boardType: 'space',
     },
 ]
