@@ -20,3 +20,9 @@ database/**
 
 # Ignore the .idea directory
 .idea/
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# Lock file (using yarn.lock)
+package-lock.json

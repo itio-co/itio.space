@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import tw from 'twin.macro'
-import { RiStickyNoteAddLine, RiSaveLine } from 'react-icons/ri'
+import React, { useState, useEffect, useMemo } from 'react';
 
 import {
   ReactFlow,
@@ -17,26 +15,20 @@ import {
 } from '@xyflow/react'
 
 import '@xyflow/react/dist/style.css'
-import { defaultNodeTypes, nodeColor, ExtendControls } from '@/components/xyflow/index'
+import { defaultNodeTypes, nodeColor } from '@/components/xyflow/index'
+import MiroToolbar from '@/components/xyflow/MiroToolbar'
+import MiroHeader from '@/components/xyflow/MiroHeader'
+import MiroZoomControls from '@/components/xyflow/MiroZoomControls'
 
 import { boards } from '@/constants/boards'
-import Button from '@/components/common/Button'
 import { BoardService } from '@/services/board/BoardService';
 import { FirebaseBoardRepository } from '@/adapters/board/FirebaseBoardRepository';
 
-// define the style of component
-const rfStyle = { backgroundColor: 'white' }
+const rfStyle = { backgroundColor: '#F5F5F5' }
 
-const SpaceBoard = tw.div`w-[100vw] h-[calc(100dvh-4rem)]`
-
-
-// define the props for the SpaceBoardComponent
 type SpaceBoardComponentProps = {
   boardId: string
 }
-
-const AddStickyNoteButton = tw(Button)`block relative w-8 h-8 border-none text-black text-center`
-const SaveButton = tw(Button)`block relative w-8 h-8 border-none text-black text-center`
 
 type NewNodeValueType = {
   id: string
@@ -45,7 +37,6 @@ type NewNodeValueType = {
 
 const boardService = new BoardService(new FirebaseBoardRepository());
 
-// define the SpaceBoardComponent
 const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   const { boardId } = props
 
@@ -67,13 +58,11 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
     []
   )
 
-  // load initial nodes and edges from constants when the component mounts
   useEffect(() => {
     const fetchBoard = async () => {
       if (!boardId) return;
 
       try {
-        // Try to load from Firebase
         const board = await boardService.getBoard(boardId);
 
         if (board) {
@@ -81,14 +70,12 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
           setEdges(board.edges);
           setIsBoardExist(true);
         } else {
-           // Fallback to constants if not found in Firebase
            const staticBoard = boards[boardId];
            if (staticBoard) {
              setNodes(staticBoard.nodes);
              setEdges(staticBoard.edges);
              setIsBoardExist(true);
 
-             // Seeding logic: if it's the demoboard and found locally but not in DB, create it in DB
              if (boardId === 'demoboard') {
                  try {
                      await boardService.createBoard(boardId, staticBoard.nodes, staticBoard.edges);
@@ -99,13 +86,11 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
              }
 
            } else {
-             // If not in constants either, show not found
              setIsBoardExist(false);
            }
         }
       } catch (error) {
         console.error("Failed to load board", error);
-        // Fallback to constants on error
         const staticBoard = boards[boardId];
         if (staticBoard) {
           setNodes(staticBoard.nodes);
@@ -157,18 +142,14 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
     }
   }
 
-// add new node feature
   const startAddNote = ({ type }: { type: string }) => {
-    // set mouse interaction to crosshair
     const flow = document.getElementById('flow')
     if (flow) {
       setCursor('crosshair')
     }
 
-    // clear old node id
     clearOldAddNode()
 
-    // random id for the new node
     const rand = Math.random().toString(36).substring(2, 10)
     setNewNodeValue({
       id: `${type}-${nodes.length}-${rand}`,
@@ -177,12 +158,10 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   }
 
   const finishAddNote = () => {
-    // set mouse interaction to default
     setCursor('grab')
   }
 
   const addNewNodeAt = (x: number, y: number) => {
-    // random id for the new node
     if (newNodeValue === null) {
       return
     }
@@ -212,7 +191,6 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
       if (!boardId) return;
       try {
           await boardService.saveBoard(boardId, nodes, edges);
-          // Optional: Show success message
           alert('Board saved successfully!');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
@@ -225,63 +203,56 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
       }
   }
 
+  const boardDisplayName = boardId
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+
   return (
-    <SpaceBoard id="flow">
+    <div className="miro-board" id="flow">
       {!isBoardExist ? (
-        <div className="text-center p-4 ">Board not found</div>
+        <div className="text-center p-4">Board not found</div>
       ) : (
-        <div className="w-full h-full">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            snapToGrid={snapToGrid}
-            snapGrid={[gridGap, gridGap]}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onNodeDoubleClick={handleNodeDoubleClick}
-            onClick={(event) => handleClick(event)}
-            // onPaneClick={(event) => handlePanClick(event)}
-            // onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            // fitView
-            style={rfStyle}
-          >
-            <Panel position="top-left" className="flow">
-              <div className="w-full h-full rounded-md bg-[whitesmoke]">
-                <div className="flex flex-col items-center gap-2 py-2">
-                  <AddStickyNoteButton onClick={() => startAddNote({ type: 'stickyNote' })} title="Add Sticky Note">
-                    <RiStickyNoteAddLine size={28} />
-                  </AddStickyNoteButton>
-                  <SaveButton onClick={handleSaveBoard} title="Save Board">
-                    <RiSaveLine size={28} />
-                  </SaveButton>
-                </div>
-              </div>
-            </Panel>
-            {/*
-          <Panel position="top-center">top-center</Panel>
-          <Panel position="top-right">top-right</Panel>
-          <Panel position="bottom-left">bottom-left</Panel>
-          <Panel position="bottom-center">bottom-center</Panel>
-          <Panel position="bottom-right">bottom-right</Panel> */}
-            <ExtendControls
-              showZoom={true}
-              showFitView={true}
-              showInteractive={true}
-              position="bottom-left"
-              orientation="horizontal"
-              showZoomTo100={true}
-            ></ExtendControls>
-            <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-            <Background variant={BackgroundVariant.Dots} gap={gridGap} size={1} />
-          </ReactFlow>
-        </div>
+        <>
+          <MiroHeader boardName={boardDisplayName} onSave={handleSaveBoard} />
+          <div className="miro-board__canvas">
+            <MiroToolbar
+              onAddStickyNote={() => startAddNote({ type: 'stickyNote' })}
+              activeTool={newNodeValue ? 'stickyNote' : 'select'}
+            />
+            <div className="miro-board__flow">
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                snapToGrid={snapToGrid}
+                snapGrid={[gridGap, gridGap]}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onNodeDoubleClick={handleNodeDoubleClick}
+                onClick={(event) => handleClick(event)}
+                nodeTypes={nodeTypes}
+                style={rfStyle}
+                proOptions={{ hideAttribution: true }}
+              >
+                <Panel position="bottom-right">
+                  <MiroZoomControls />
+                </Panel>
+                <MiniMap
+                  nodeColor={nodeColor}
+                  nodeStrokeWidth={3}
+                  zoomable
+                  pannable
+                  style={{ bottom: 50, right: 12 }}
+                />
+                <Background variant={BackgroundVariant.Dots} gap={gridGap} size={1} />
+              </ReactFlow>
+            </div>
+          </div>
+        </>
       )}
-    </SpaceBoard>
+    </div>
   )
 }
 
-// wrapping with ReactFlowProvider is done outside of the component
 const SpaceBoardComponentWithProvider: React.FC<SpaceBoardComponentProps> = (props) => {
   return (
     <ReactFlowProvider>
