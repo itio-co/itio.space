@@ -214,3 +214,271 @@ body {
     width: 130px;
   }
 }
+
+/* ========================================
+   Miro-like Board UI Styles
+   ======================================== */
+
+/* Board layout */
+.miro-board {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.miro-board__canvas {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.miro-board__flow {
+  flex: 1;
+  position: relative;
+}
+
+/* ---- Header ---- */
+.miro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 12px;
+  background: #fff;
+  border-bottom: 1px solid #e6e6e6;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.miro-header__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.miro-header__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.miro-header__board-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+
+.miro-header__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.miro-header__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #585858;
+  transition: background 0.15s;
+}
+
+.miro-header__icon-btn:hover {
+  background: #f0f0f0;
+}
+
+.miro-header__present-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a2e;
+  transition: background 0.15s;
+}
+
+.miro-header__present-btn:hover {
+  background: #f5f5f5;
+}
+
+.miro-header__share-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: none;
+  background: #4262ff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  transition: background 0.15s;
+}
+
+.miro-header__share-btn:hover {
+  background: #3350e0;
+}
+
+/* ---- Left Toolbar ---- */
+.miro-toolbar {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+  height: calc(100% - 24px);
+}
+
+.miro-toolbar__tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  pointer-events: auto;
+}
+
+.miro-toolbar__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #585858;
+  transition: all 0.15s;
+}
+
+.miro-toolbar__btn:hover {
+  background: #f0f0f0;
+  color: #1a1a2e;
+}
+
+.miro-toolbar__btn--active {
+  background: #e8eaff;
+  color: #4262ff;
+}
+
+.miro-toolbar__btn--active:hover {
+  background: #dde0ff;
+  color: #4262ff;
+}
+
+.miro-toolbar__btn--add {
+  background: #4262ff;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.miro-toolbar__btn--add:hover {
+  background: #3350e0;
+  color: #fff;
+}
+
+.miro-toolbar__separator {
+  width: 24px;
+  height: 1px;
+  background: #e6e6e6;
+  margin: 4px 0;
+}
+
+.miro-toolbar__history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  pointer-events: auto;
+}
+
+/* ---- Zoom Controls ---- */
+.miro-zoom {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 4px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.miro-zoom__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #585858;
+  transition: all 0.15s;
+}
+
+.miro-zoom__btn:hover {
+  background: #f0f0f0;
+  color: #1a1a2e;
+}
+
+.miro-zoom__percentage {
+  min-width: 42px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #585858;
+  text-align: center;
+  transition: all 0.15s;
+  border-radius: 4px;
+}
+
+.miro-zoom__percentage:hover {
+  background: #f0f0f0;
+  color: #1a1a2e;
+}
+
+.miro-zoom__separator {
+  width: 1px;
+  height: 20px;
+  background: #e6e6e6;
+  margin: 0 2px;
+}
+
+/* Hide default React Flow controls since we use custom ones */
+.miro-board .react-flow__controls {
+  display: none;
+}
