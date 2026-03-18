@@ -1,6 +1,6 @@
 // src/constants/space-list.tsx
 
-export type BoardType = 'space' | 'langchain'
+export type BoardType = 'space' | 'langchain' | 'drawio'
 
 export type Space = {
     id: string;
@@ -38,5 +38,10 @@ export const spaceList: Space[] = [
         id: 'dbml',
         name: 'DBML Playground',
         boardType: 'space',
+    },
+    {
+        id: 'drawio',
+        name: 'Draw.io Diagrams',
+        boardType: 'drawio',
     },
 ]
