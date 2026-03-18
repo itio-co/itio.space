@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { logout } from '@/redux/userSlice';
@@ -11,6 +11,11 @@ const UserProfile = () => {
   const dispatch = useDispatch<any>();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -35,7 +40,7 @@ const UserProfile = () => {
     router.push('/profile');
   };
 
-  if (!user.token) {
+  if (!mounted || !user.token) {
     return (
       <button
         onClick={handleLogin}

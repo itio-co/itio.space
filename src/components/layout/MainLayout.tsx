@@ -5,7 +5,8 @@ import UserProfile from '@/components/auth/UserProfile'
 import useAuthListener from '@/hooks/useAuthListener'
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
-  const pathname = usePathname() || '/'
+  const rawPathname = usePathname() || '/'
+  const pathname = rawPathname.replace(/\/+$/, '') || '/'
 
   const NO_PROFILE_ROUTES = ['/login', '/itio-space/certificate']
 
