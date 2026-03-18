@@ -5,16 +5,20 @@ import {
   RiSaveLine,
   RiMoreLine,
   RiExternalLinkLine,
+  RiFullscreenLine,
+  RiFullscreenExitLine,
 } from 'react-icons/ri'
 
 type BoardHeaderProps = {
   boardName: string
   onSave: () => void
+  isIslandMode: boolean
+  onToggleMode: () => void
 }
 
-const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave }) => {
+const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMode, onToggleMode }) => {
   return (
-    <div className="board-header">
+    <div className={`board-header ${isIslandMode ? 'board-header--island' : ''}`}>
       {/* Left section - Logo + Board name */}
       <div className="board-header__left">
         <div className="board-header__logo">
@@ -34,6 +38,9 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave }) => {
 
       {/* Right section - Actions */}
       <div className="board-header__right">
+        <button className="board-header__icon-btn" onClick={onToggleMode} title={isIslandMode ? 'Normal mode' : 'Island mode'}>
+          {isIslandMode ? <RiFullscreenExitLine size={18} /> : <RiFullscreenLine size={18} />}
+        </button>
         <button className="board-header__icon-btn" onClick={onSave} title="Save board">
           <RiSaveLine size={18} />
         </button>

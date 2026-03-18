@@ -337,6 +337,44 @@ body {
   background: #3350e0;
 }
 
+/* ---- Island Mode ---- */
+.board-header {
+  transition: all 0.2s ease;
+}
+
+.board-layout--island .board-layout__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.board-header--island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: 40px;
+  padding: 0 8px;
+  border-bottom: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  z-index: 20;
+}
+
+.board-header--island .board-header__board-name {
+  display: none;
+}
+
+.board-header--island .board-header__present-btn span,
+.board-header--island .board-header__share-btn span {
+  display: none;
+}
+
+.board-header--island .board-header__present-btn,
+.board-header--island .board-header__share-btn {
+  padding: 6px;
+}
+
 /* ---- Left Toolbar ---- */
 .board-toolbar {
   position: absolute;
