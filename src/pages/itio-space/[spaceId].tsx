@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import SpaceBoard from '@/components/xyflow/SpaceBoard'
 import LangChainBoard from '@/components/xyflow/LangChainBoard'
+import DrawioBoard from '@/components/drawio/DrawioBoard'
 import UserProfile from '@/components/auth/UserProfile'
 import { spaceList, type BoardType } from '@/constants/space-list'
 
@@ -24,7 +25,9 @@ export default function DemoBoard() {
       <div className="absolute top-4 right-4 z-50">
         <UserProfile />
       </div>
-      {boardType === 'langchain' ? (
+      {boardType === 'drawio' ? (
+        <DrawioBoard boardId={boardId} />
+      ) : boardType === 'langchain' ? (
         <LangChainBoard boardId={boardId} />
       ) : (
         <SpaceBoard boardId={boardId} />
