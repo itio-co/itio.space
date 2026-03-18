@@ -1,7 +1,8 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import type { FC } from 'react'
 import { usePathname } from 'next/navigation'
 import UserProfile from '@/components/auth/UserProfile'
+import useAuthListener from '@/hooks/useAuthListener'
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname() || '/'
@@ -13,7 +14,8 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 
   const isHideHeader = NO_HEADER_ROUTES.includes(pathname) || isDynamicBoardRoute
   const isHideProfile = NO_PROFILE_ROUTES.includes(pathname)
-  const [isSetUserData, setIsSetUserData] = React.useState(true)
+
+  useAuthListener()
 
   return (
     <div className="relative">
