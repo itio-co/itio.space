@@ -45,6 +45,7 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   const [isBoardExist, setIsBoardExist] = useState(false)
   const [snapToGrid] = useState(true)
   const [gridGap] = useState(10)
+  const [isIslandMode, setIsIslandMode] = useState(false)
 
   const { screenToFlowPosition } = useReactFlow()
 
@@ -208,12 +209,17 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 
   return (
-    <div className="board-layout" id="flow">
+    <div className={`board-layout ${isIslandMode ? 'board-layout--island' : ''}`} id="flow">
       {!isBoardExist ? (
         <div className="text-center p-4">Board not found</div>
       ) : (
         <>
-          <BoardHeader boardName={boardDisplayName} onSave={handleSaveBoard} />
+          <BoardHeader
+            boardName={boardDisplayName}
+            onSave={handleSaveBoard}
+            isIslandMode={isIslandMode}
+            onToggleMode={() => setIsIslandMode(prev => !prev)}
+          />
           <div className="board-layout__canvas">
             <BoardToolbar
               onAddStickyNote={() => startAddNote({ type: 'stickyNote' })}
