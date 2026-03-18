@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import tw from "twin.macro"
 import { RiListUnordered, RiGridFill } from "react-icons/ri"
+import { useSelector, useDispatch } from "react-redux"
 
 import { spaceList } from "@/constants/space-list"
 import UserProfile from "@/components/auth/UserProfile"
+import { RootState, AppDispatch } from "@/redux/store"
+import { checkUserDataFromLocalStorage } from "@/redux/userSlice"
 
 type ViewMode = 'list' | 'thumbnails'
 
@@ -29,6 +33,26 @@ const Title = tw.span`text-sm font-bold`
 
 export default function MySpaceComponent() {
     const [viewMode, setViewMode] = useState<ViewMode>('list')
+    const [authChecked, setAuthChecked] = useState(false)
+    const user = useSelector((state: RootState) => state.user)
+    const router = useRouter()
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        dispatch(checkUserDataFromLocalStorage()).then(() => {
+            setAuthChecked(true)
+        })
+    }, [dispatch])
+
+    useEffect(() => {
+        if (authChecked && !user.token) {
+            router.replace(`/login?redirect=${encodeURIComponent(router.asPath)}`)
+        }
+    }, [authChecked, user.token, router])
+
+    if (!authChecked || !user.token) {
+        return null
+    }
 
     return (
         <MySpace>
