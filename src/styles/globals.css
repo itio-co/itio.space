@@ -252,9 +252,12 @@ body {
   border-bottom: 1px solid #e6e6e6;
   z-index: 10;
   flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
-.board-header__left {
+/* Shared island styles (board + user) */
+.board-header__board-island,
+.board-header__user-island {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -273,12 +276,6 @@ body {
   font-weight: 600;
   color: #1a1a2e;
   white-space: nowrap;
-}
-
-.board-header__right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .board-header__icon-btn {
@@ -338,33 +335,38 @@ body {
 }
 
 /* ---- Island Mode ---- */
-.board-header {
-  transition: all 0.2s ease;
-}
 
+/* Canvas fills full viewport */
 .board-layout--island .board-layout__canvas {
   position: absolute;
   inset: 0;
 }
 
+/* Header becomes a transparent container for two floating islands */
 .board-header--island {
   position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  height: 40px;
-  padding: 0 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  padding: 12px 12px;
+  background: transparent;
   border-bottom: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
   z-index: 20;
+  pointer-events: none;
 }
 
-.board-header--island .board-header__board-name {
-  display: none;
+/* Each island floats as a pill */
+.board-header--island .board-header__board-island,
+.board-header--island .board-header__user-island {
+  background: #fff;
+  border-radius: 12px;
+  padding: 4px 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  pointer-events: auto;
 }
 
+/* Compact: hide text labels on Present/Share buttons in island mode */
 .board-header--island .board-header__present-btn span,
 .board-header--island .board-header__share-btn span {
   display: none;
