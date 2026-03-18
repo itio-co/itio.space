@@ -20,7 +20,7 @@ type BoardHeaderProps = {
 const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMode, onToggleMode, userSlot }) => {
   return (
     <div className={`board-header ${isIslandMode ? 'board-header--island' : ''}`}>
-      {/* Board island - Logo + Board name + board actions */}
+      {/* Board island - Logo + Board name + board-oriented actions */}
       <div className="board-header__board-island">
         <div className="board-header__logo">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -32,6 +32,13 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMo
         <button className="board-header__icon-btn" title="More options">
           <RiMoreLine size={18} />
         </button>
+        <button className="board-header__icon-btn" onClick={onToggleMode} title={isIslandMode ? 'Normal mode' : 'Island mode'}>
+          {isIslandMode ? <RiFullscreenExitLine size={18} /> : <RiFullscreenLine size={18} />}
+        </button>
+      </div>
+
+      {/* Accessible island - Share link, Present, Share, Save + user profile */}
+      <div className="board-header__accessible-island">
         <button className="board-header__icon-btn" title="Share link">
           <RiExternalLinkLine size={18} />
         </button>
@@ -43,13 +50,6 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMo
           <RiShareLine size={16} />
           <span>Share</span>
         </button>
-        <button className="board-header__icon-btn" onClick={onToggleMode} title={isIslandMode ? 'Normal mode' : 'Island mode'}>
-          {isIslandMode ? <RiFullscreenExitLine size={18} /> : <RiFullscreenLine size={18} />}
-        </button>
-      </div>
-
-      {/* User island - Save + user profile */}
-      <div className="board-header__user-island">
         <button className="board-header__icon-btn" onClick={onSave} title="Save board">
           <RiSaveLine size={18} />
         </button>

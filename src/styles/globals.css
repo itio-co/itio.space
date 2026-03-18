@@ -257,7 +257,7 @@ body {
 
 /* Shared island styles (board + user) */
 .board-header__board-island,
-.board-header__user-island {
+.board-header__accessible-island {
   display: flex;
   align-items: center;
   gap: 8px;
