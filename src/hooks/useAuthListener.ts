@@ -13,7 +13,6 @@ export default function useAuthListener() {
     // Immediately hydrate from localStorage to avoid flash of logged-out state
     dispatch(checkUserDataFromLocalStorage())
 
-    // Then set up Firebase auth listener for fresh tokens
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const token = await user.getIdToken()

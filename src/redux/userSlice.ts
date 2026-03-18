@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { auth, googleProvider } from '@/config/firebase'
-import { signInWithRedirect } from 'firebase/auth'
+import { signInWithPopup } from 'firebase/auth'
 
 const initialState = {
   email: '',
@@ -13,14 +13,17 @@ const initialState = {
 export const loginWithGoogle = createAsyncThunk(
   'user/loginWithGoogle',
   async () => {
-    try {
-      await signInWithRedirect(auth, googleProvider)
-      // After redirect, the auth listener (useAuthListener) will handle the signed-in user
-      return initialState
-    } catch (error) {
-      console.error("Google Sign-In Error", error)
-      throw error
+    const result = await signInWithPopup(auth, googleProvider)
+    const user = result.user
+    const token = await user.getIdToken()
+    const userData = {
+      email: user.email || '',
+      token,
+      displayName: user.displayName || '',
+      photoURL: user.photoURL || '',
     }
+    localStorage.setItem('user', JSON.stringify(userData))
+    return userData
   }
 )
 

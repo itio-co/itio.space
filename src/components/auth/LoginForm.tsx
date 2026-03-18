@@ -1,23 +1,22 @@
 import React from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { loginWithGoogle } from '@/redux/userSlice'
 import { useAppDispatch } from '@/redux/store'
 
 const LoginForm = () => {
   const router = useRouter()
-  const searchParams = useSearchParams()
-
   const dispatch = useAppDispatch()
 
   const getRedirectPath = () => {
-    const redirect = searchParams?.get('redirect')
-    return redirect || '/'
+    return (router.query.redirect as string) || '/'
   }
 
   const handleGoogleLogin = async () => {
     try {
-      await dispatch(loginWithGoogle())
-      router.push(getRedirectPath())
+      const result = await dispatch(loginWithGoogle()).unwrap()
+      if (result.token) {
+        router.replace(getRedirectPath())
+      }
     } catch (e) {
       console.log('Google login error', e)
     }
