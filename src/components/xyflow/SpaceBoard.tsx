@@ -204,7 +204,7 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
       }
   }
 
-  const boardDisplayName = boardId
+  const boardDisplayName = (boardId || '')
     .replace(/-/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase())
 
