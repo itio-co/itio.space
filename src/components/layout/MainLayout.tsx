@@ -8,7 +8,7 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   const rawPathname = usePathname() || '/'
   const pathname = rawPathname.replace(/\/+$/, '') || '/'
 
-  const NO_PROFILE_ROUTES = ['/login', '/itio-space/certificate']
+  const NO_PROFILE_ROUTES = ['/login', '/itio-space', '/itio-space/certificate']
 
   const isDynamicBoardRoute = /^\/itio-space\/[^/]+$/.test(pathname) && pathname !== '/itio-space'
 

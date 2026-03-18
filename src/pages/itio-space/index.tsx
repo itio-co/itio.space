@@ -4,11 +4,14 @@ import tw from "twin.macro"
 import { RiListUnordered, RiGridFill } from "react-icons/ri"
 
 import { spaceList } from "@/constants/space-list"
+import UserProfile from "@/components/auth/UserProfile"
 
 type ViewMode = 'list' | 'thumbnails'
 
 const MySpace = tw.main`m-0`
-const Toolbar = tw.div`flex justify-end items-center gap-1 px-4 pt-4`
+const HeaderBar = tw.header`flex items-center justify-between px-4 py-3 border-b border-gray-200`
+const HeaderTitle = tw.h1`text-lg font-semibold text-gray-800`
+const Toolbar = tw.div`flex justify-end items-center gap-1 px-4 pt-3`
 const SpaceList = tw.div`p-4`
 
 // Thumbnail view
@@ -29,6 +32,10 @@ export default function MySpaceComponent() {
 
     return (
         <MySpace>
+            <HeaderBar>
+                <HeaderTitle>My Spaces</HeaderTitle>
+                <UserProfile />
+            </HeaderBar>
             <Toolbar>
                 <button
                     onClick={() => setViewMode('list')}
