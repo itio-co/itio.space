@@ -344,7 +344,7 @@ body {
 
 /* Header becomes a transparent container for two floating islands */
 .board-header--island {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -358,7 +358,7 @@ body {
 
 /* Each island floats as a pill */
 .board-header--island .board-header__board-island,
-.board-header--island .board-header__user-island {
+.board-header--island .board-header__accessible-island {
   background: #fff;
   border-radius: 12px;
   padding: 4px 8px;
@@ -385,10 +385,9 @@ body {
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 8px;
   z-index: 10;
   pointer-events: none;
-  height: calc(100% - 24px);
 }
 
 .board-toolbar__tools {
