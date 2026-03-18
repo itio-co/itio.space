@@ -27,13 +27,8 @@ export default function DemoBoard() {
       <div className="absolute top-4 right-4 z-50">
         <UserProfile />
       </div>
-      {boardType === 'drawio' ? (
-        <DrawioBoard boardId={boardId} />
-      )}
-      {boardType === 'langchain' ? (
-        <LangChainBoard boardId={boardId} />
-      )}
-      {boardType === 'langchain' ? (
+      {boardType === 'drawio' && <DrawioBoard boardId={boardId} />}
+      {boardType === 'langchain' && (
         <>
           <div className="absolute top-4 right-4 z-50">
             <UserProfile />
@@ -41,7 +36,7 @@ export default function DemoBoard() {
           <LangChainBoard boardId={boardId} />
         </>
       )}
-      {boardType === 'space' ? (
+      {boardType === 'space' && (
         <SpaceBoard boardId={boardId} userSlot={userProfileSlot} />
       )}
     </>
