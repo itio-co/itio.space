@@ -28,6 +28,7 @@ const rfStyle = { backgroundColor: '#F5F5F5' }
 
 type SpaceBoardComponentProps = {
   boardId: string
+  userSlot?: React.ReactNode
 }
 
 type NewNodeValueType = {
@@ -38,7 +39,7 @@ type NewNodeValueType = {
 const boardService = new BoardService(new FirebaseBoardRepository());
 
 const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
-  const { boardId } = props
+  const { boardId, userSlot } = props
 
   const [nodes, setNodes, onNodesChange] = useNodesState([] as Node[])
   const [edges, setEdges, onEdgesChange] = useEdgesState([] as Edge[])
@@ -204,7 +205,7 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
       }
   }
 
-  const boardDisplayName = boardId
+  const boardDisplayName = (boardId || '')
     .replace(/-/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase())
 
@@ -219,6 +220,7 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
             onSave={handleSaveBoard}
             isIslandMode={isIslandMode}
             onToggleMode={() => setIsIslandMode(prev => !prev)}
+            userSlot={userSlot}
           />
           <div className="board-layout__canvas">
             <BoardToolbar

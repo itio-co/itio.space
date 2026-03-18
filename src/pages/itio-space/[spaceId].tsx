@@ -20,6 +20,8 @@ export default function DemoBoard() {
     setBoardType(space?.boardType ?? 'space')
   }, [router])
 
+  const userProfileSlot = <UserProfile />
+
   return (
     <>
       <div className="absolute top-4 right-4 z-50">
@@ -27,10 +29,20 @@ export default function DemoBoard() {
       </div>
       {boardType === 'drawio' ? (
         <DrawioBoard boardId={boardId} />
-      ) : boardType === 'langchain' ? (
+      )}
+      {boardType === 'langchain' ? (
         <LangChainBoard boardId={boardId} />
-      ) : (
-        <SpaceBoard boardId={boardId} />
+      )}
+      {boardType === 'langchain' ? (
+        <>
+          <div className="absolute top-4 right-4 z-50">
+            <UserProfile />
+          </div>
+          <LangChainBoard boardId={boardId} />
+        </>
+      )}
+      {boardType === 'space' ? (
+        <SpaceBoard boardId={boardId} userSlot={userProfileSlot} />
       )}
     </>
   )

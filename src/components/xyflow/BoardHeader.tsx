@@ -14,13 +14,14 @@ type BoardHeaderProps = {
   onSave: () => void
   isIslandMode: boolean
   onToggleMode: () => void
+  userSlot?: React.ReactNode
 }
 
-const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMode, onToggleMode }) => {
+const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMode, onToggleMode, userSlot }) => {
   return (
     <div className={`board-header ${isIslandMode ? 'board-header--island' : ''}`}>
-      {/* Left section - Logo + Board name */}
-      <div className="board-header__left">
+      {/* Board island - Logo + Board name + board actions */}
+      <div className="board-header__board-island">
         <div className="board-header__logo">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <rect width="24" height="24" rx="4" fill="#FFD02F" />
@@ -34,16 +35,6 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMo
         <button className="board-header__icon-btn" title="Share link">
           <RiExternalLinkLine size={18} />
         </button>
-      </div>
-
-      {/* Right section - Actions */}
-      <div className="board-header__right">
-        <button className="board-header__icon-btn" onClick={onToggleMode} title={isIslandMode ? 'Normal mode' : 'Island mode'}>
-          {isIslandMode ? <RiFullscreenExitLine size={18} /> : <RiFullscreenLine size={18} />}
-        </button>
-        <button className="board-header__icon-btn" onClick={onSave} title="Save board">
-          <RiSaveLine size={18} />
-        </button>
         <button className="board-header__present-btn">
           <RiPlayLine size={16} />
           <span>Present</span>
@@ -52,6 +43,17 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMo
           <RiShareLine size={16} />
           <span>Share</span>
         </button>
+        <button className="board-header__icon-btn" onClick={onToggleMode} title={isIslandMode ? 'Normal mode' : 'Island mode'}>
+          {isIslandMode ? <RiFullscreenExitLine size={18} /> : <RiFullscreenLine size={18} />}
+        </button>
+      </div>
+
+      {/* User island - Save + user profile */}
+      <div className="board-header__user-island">
+        <button className="board-header__icon-btn" onClick={onSave} title="Save board">
+          <RiSaveLine size={18} />
+        </button>
+        {userSlot}
       </div>
     </div>
   )
