@@ -8,6 +8,7 @@ import {
   RiFullscreenLine,
   RiFullscreenExitLine,
 } from 'react-icons/ri'
+import ThemeToggle from '@/components/common/ThemeToggle'
 
 type BoardHeaderProps = {
   boardName: string
@@ -53,6 +54,7 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({ boardName, onSave, isIslandMo
         <button className="board-header__icon-btn" onClick={onSave} title="Save board">
           <RiSaveLine size={18} />
         </button>
+        <ThemeToggle />
         {userSlot}
       </div>
     </div>

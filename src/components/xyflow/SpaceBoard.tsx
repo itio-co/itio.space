@@ -23,8 +23,7 @@ import BoardZoomControls from '@/components/xyflow/BoardZoomControls'
 import { boards } from '@/constants/boards'
 import { BoardService } from '@/services/board/BoardService';
 import { FirebaseBoardRepository } from '@/adapters/board/FirebaseBoardRepository';
-
-const rfStyle = { backgroundColor: '#F5F5F5' }
+import { useTheme } from '@/components/common/ThemeProvider'
 
 type SpaceBoardComponentProps = {
   boardId: string
@@ -40,6 +39,11 @@ const boardService = new BoardService(new FirebaseBoardRepository());
 
 const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   const { boardId, userSlot } = props
+  const { theme } = useTheme()
+
+  const rfStyle = useMemo(() => ({
+    backgroundColor: theme === 'dark' ? '#1a1625' : '#F5F5F5',
+  }), [theme])
 
   const [nodes, setNodes, onNodesChange] = useNodesState([] as Node[])
   const [edges, setEdges, onEdgesChange] = useEdgesState([] as Edge[])
@@ -61,6 +65,29 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   )
 
   useEffect(() => {
+    const isPermissionError = (err: unknown): boolean => {
+      if (err && typeof err === 'object' && 'code' in err) {
+        const code = (err as { code: string }).code;
+        return code === 'permission-denied' || code === 'PERMISSION_DENIED';
+      }
+      if (err instanceof Error) {
+        return err.message.includes('Missing or insufficient permissions');
+      }
+      return false;
+    };
+
+    const loadStaticBoard = (id: string): boolean => {
+      const staticBoard = boards[id];
+      if (staticBoard) {
+        setNodes(staticBoard.nodes);
+        setEdges(staticBoard.edges);
+        setIsBoardExist(true);
+        return true;
+      }
+      setIsBoardExist(false);
+      return false;
+    };
+
     const fetchBoard = async () => {
       if (!boardId) return;
 
@@ -72,35 +99,28 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
           setEdges(board.edges);
           setIsBoardExist(true);
         } else {
-           const staticBoard = boards[boardId];
-           if (staticBoard) {
-             setNodes(staticBoard.nodes);
-             setEdges(staticBoard.edges);
-             setIsBoardExist(true);
-
+           if (loadStaticBoard(boardId)) {
              if (boardId === 'demoboard') {
                  try {
-                     await boardService.createBoard(boardId, staticBoard.nodes, staticBoard.edges);
+                     await boardService.createBoard(boardId, boards[boardId].nodes, boards[boardId].edges);
                      console.log('Seeded demoboard to database');
                  } catch (seedError) {
-                     console.error('Failed to seed demoboard', seedError);
+                     if (isPermissionError(seedError)) {
+                       console.warn('Firestore permission denied — demoboard loaded from local data. Update Firestore rules to enable persistence.');
+                     } else {
+                       console.error('Failed to seed demoboard', seedError);
+                     }
                  }
              }
-
-           } else {
-             setIsBoardExist(false);
            }
         }
       } catch (error) {
-        console.error("Failed to load board", error);
-        const staticBoard = boards[boardId];
-        if (staticBoard) {
-          setNodes(staticBoard.nodes);
-          setEdges(staticBoard.edges);
-          setIsBoardExist(true);
+        if (isPermissionError(error)) {
+          console.warn('Firestore permission denied — loading board from local data. Update Firestore rules to enable persistence.');
         } else {
-            setIsBoardExist(false);
+          console.error('Failed to load board', error);
         }
+        loadStaticBoard(boardId);
       }
     };
 
@@ -251,7 +271,12 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
                   pannable
                   style={{ bottom: 50, right: 12 }}
                 />
-                <Background variant={BackgroundVariant.Dots} gap={gridGap} size={1} />
+                <Background
+                  variant={BackgroundVariant.Dots}
+                  gap={gridGap}
+                  size={1}
+                  color={theme === 'dark' ? 'rgba(255,255,255,0.12)' : undefined}
+                />
               </ReactFlow>
             </div>
           </div>

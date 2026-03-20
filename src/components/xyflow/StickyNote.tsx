@@ -11,10 +11,9 @@ const MainDiv = tw.div`
   shadow-lg // shadow
   rounded-sm // border radius
   overflow-auto // scroll
-
-  [> p]:text-black // text color
+  text-black // force black text (board content, not themed)
 `
-export const textStyle = tw`block w-full h-full bg-inherit focus:outline-none resize-none break-words`
+export const textStyle = tw`block w-full h-full bg-inherit focus:outline-none resize-none break-words text-black`
 const defaultBorderColor = 'transparent'
 
 export type StickyNodeData = {

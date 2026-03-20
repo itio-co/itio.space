@@ -1,5 +1,5 @@
 #npm test
 #npx lint-staged
 
-rm -rf .next
-yarn build
+#rm -rf .next
+#yarn build

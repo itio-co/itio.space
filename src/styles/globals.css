@@ -135,53 +135,59 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* text-updater-node */
+/* text-updater-node (board content — not themed) */
 .text-updater-node {
   height: 50px;
-  border: 1px solid var(--border-light);
+  border: 1px solid #eee;
   padding: 5px;
   border-radius: 5px;
-  background: var(--surface);
+  background: white;
 }
 
 .text-updater-node label {
   display: block;
-  color: var(--text-tertiary);
+  color: #777;
   font-size: 12px;
 }
 
 .text-updater-node input {
-  border: 1px solid var(--border);
+  border: 1px solid #000;
   height: 20px;
   padding: 5px;
-  background: var(--surface);
-  color: var(--text-primary);
+  background: white;
 }
 
-/* counter-node */
+/* counter-node (board content — not themed) */
 .counter-node {
   height: 70px;
-  border: 1px solid var(--border-light);
+  border: 1px solid #eee;
   padding: 5px;
   border-radius: 5px;
-  background: var(--surface);
+  background: white;
 }
 .counter-node button {
   padding: 5px;
-  background: var(--accent);
+  background: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-/* custom-node */
+/* custom-node (board content — not themed) */
 .custom-node {
   height: 70px;
-  border: 1px solid var(--border-light);
+  border: 1px solid #eee;
   padding: 5px;
   border-radius: 5px;
-  background: var(--surface);
+  background: white;
+}
+
+/* React Flow default nodes — board content, not themed */
+.react-flow__node.react-flow__node-default,
+.react-flow__node.react-flow__node-input,
+.react-flow__node.react-flow__node-output {
+  color: #1a1a2e !important;
 }
 
 /* Styles for the TwinkleStars component */
