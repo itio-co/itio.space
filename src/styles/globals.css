@@ -2,9 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================
+   Theme Tokens
+   ======================================== */
 :root {
-  --foreground: #000000;
+  /* Light theme (default fallback) */
+  --foreground: #1a1a2e;
   --background: #ffffff;
+  --surface: #ffffff;
+  --surface-secondary: #f5f5f5;
+  --surface-hover: #f0f0f0;
+  --surface-active: #e8eaff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #585858;
+  --text-tertiary: #777777;
+  --border: #e6e6e6;
+  --border-light: #eeeeee;
+  --accent: #4262ff;
+  --accent-hover: #3350e0;
+  --shadow-card: rgba(0, 0, 0, 0.08);
+  --shadow-outline: rgba(0, 0, 0, 0.04);
+}
+
+html.dark {
+  /* Dark theme overrides */
+  --foreground: rgba(255, 255, 255, 0.87);
+  --background: #0f0a1a;
+  --surface: #1e1e2e;
+  --surface-secondary: #16121f;
+  --surface-hover: #2a2640;
+  --surface-active: #2d2a4a;
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: #a0a0b0;
+  --text-tertiary: #6b6b80;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.06);
+  --accent: #6d5dff;
+  --accent-hover: #5b4de0;
+  --shadow-card: rgba(0, 0, 0, 0.35);
+  --shadow-outline: rgba(0, 0, 0, 0.2);
 }
 
 html {
@@ -102,37 +138,37 @@ body {
 /* text-updater-node */
 .text-updater-node {
   height: 50px;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-light);
   padding: 5px;
   border-radius: 5px;
-  background: white;
+  background: var(--surface);
 }
 
 .text-updater-node label {
   display: block;
-  color: #777;
+  color: var(--text-tertiary);
   font-size: 12px;
 }
 
 .text-updater-node input {
-  border: 1px solid #000;
+  border: 1px solid var(--border);
   height: 20px;
   padding: 5px;
-  /* border-radius: 5px; */
-  background: white;
+  background: var(--surface);
+  color: var(--text-primary);
 }
 
 /* counter-node */
 .counter-node {
   height: 70px;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-light);
   padding: 5px;
   border-radius: 5px;
-  background: white;
+  background: var(--surface);
 }
 .counter-node button {
   padding: 5px;
-  background: #007bff;
+  background: var(--accent);
   color: white;
   border: none;
   border-radius: 5px;
@@ -142,10 +178,10 @@ body {
 /* custom-node */
 .custom-node {
   height: 70px;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-light);
   padding: 5px;
   border-radius: 5px;
-  background: white;
+  background: var(--surface);
 }
 
 /* Styles for the TwinkleStars component */
@@ -216,7 +252,7 @@ body {
 }
 
 /* ========================================
-   Board UI Styles
+   Board UI Styles (theme-aware)
    ======================================== */
 
 /* Board layout */
@@ -226,7 +262,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #f5f5f5;
+  background: var(--surface-secondary);
 }
 
 .board-layout__canvas {
@@ -248,8 +284,8 @@ body {
   justify-content: space-between;
   height: 48px;
   padding: 0 12px;
-  background: #fff;
-  border-bottom: 1px solid #e6e6e6;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   z-index: 10;
   flex-shrink: 0;
   transition: all 0.2s ease;
@@ -274,7 +310,7 @@ body {
 .board-header__board-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1a1a2e;
+  color: var(--text-primary);
   white-space: nowrap;
 }
 
@@ -288,12 +324,12 @@ body {
   background: transparent;
   border-radius: 6px;
   cursor: pointer;
-  color: #585858;
+  color: var(--text-secondary);
   transition: background 0.15s;
 }
 
 .board-header__icon-btn:hover {
-  background: #f0f0f0;
+  background: var(--surface-hover);
 }
 
 .board-header__present-btn {
@@ -301,18 +337,18 @@ body {
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--surface);
   border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--text-primary);
   transition: background 0.15s;
 }
 
 .board-header__present-btn:hover {
-  background: #f5f5f5;
+  background: var(--surface-secondary);
 }
 
 .board-header__share-btn {
@@ -321,7 +357,7 @@ body {
   gap: 6px;
   padding: 6px 14px;
   border: none;
-  background: #4262ff;
+  background: var(--accent);
   border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
@@ -331,7 +367,7 @@ body {
 }
 
 .board-header__share-btn:hover {
-  background: #3350e0;
+  background: var(--accent-hover);
 }
 
 /* ---- Island Mode ---- */
@@ -359,10 +395,10 @@ body {
 /* Each island floats as a pill */
 .board-header--island .board-header__board-island,
 .board-header--island .board-header__accessible-island {
-  background: #fff;
+  background: var(--surface);
   border-radius: 12px;
   padding: 4px 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
   pointer-events: auto;
 }
 
@@ -396,9 +432,9 @@ body {
   align-items: center;
   gap: 2px;
   padding: 6px;
-  background: #fff;
+  background: var(--surface);
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
   pointer-events: auto;
 }
 
@@ -412,40 +448,40 @@ body {
   background: transparent;
   border-radius: 8px;
   cursor: pointer;
-  color: #585858;
+  color: var(--text-secondary);
   transition: all 0.15s;
 }
 
 .board-toolbar__btn:hover {
-  background: #f0f0f0;
-  color: #1a1a2e;
+  background: var(--surface-hover);
+  color: var(--text-primary);
 }
 
 .board-toolbar__btn--active {
-  background: #e8eaff;
-  color: #4262ff;
+  background: var(--surface-active);
+  color: var(--accent);
 }
 
 .board-toolbar__btn--active:hover {
-  background: #dde0ff;
-  color: #4262ff;
+  background: var(--surface-active);
+  color: var(--accent);
 }
 
 .board-toolbar__btn--add {
-  background: #4262ff;
+  background: var(--accent);
   color: #fff;
   border-radius: 8px;
 }
 
 .board-toolbar__btn--add:hover {
-  background: #3350e0;
+  background: var(--accent-hover);
   color: #fff;
 }
 
 .board-toolbar__separator {
   width: 24px;
   height: 1px;
-  background: #e6e6e6;
+  background: var(--border);
   margin: 4px 0;
 }
 
@@ -455,9 +491,9 @@ body {
   align-items: center;
   gap: 2px;
   padding: 4px;
-  background: #fff;
+  background: var(--surface);
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
   pointer-events: auto;
 }
 
@@ -467,9 +503,9 @@ body {
   align-items: center;
   gap: 0;
   padding: 4px;
-  background: #fff;
+  background: var(--surface);
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
 }
 
 .board-zoom__btn {
@@ -482,13 +518,13 @@ body {
   background: transparent;
   border-radius: 4px;
   cursor: pointer;
-  color: #585858;
+  color: var(--text-secondary);
   transition: all 0.15s;
 }
 
 .board-zoom__btn:hover {
-  background: #f0f0f0;
-  color: #1a1a2e;
+  background: var(--surface-hover);
+  color: var(--text-primary);
 }
 
 .board-zoom__percentage {
@@ -499,21 +535,21 @@ body {
   cursor: pointer;
   font-size: 12px;
   font-weight: 500;
-  color: #585858;
+  color: var(--text-secondary);
   text-align: center;
   transition: all 0.15s;
   border-radius: 4px;
 }
 
 .board-zoom__percentage:hover {
-  background: #f0f0f0;
-  color: #1a1a2e;
+  background: var(--surface-hover);
+  color: var(--text-primary);
 }
 
 .board-zoom__separator {
   width: 1px;
   height: 20px;
-  background: #e6e6e6;
+  background: var(--border);
   margin: 0 2px;
 }
 

@@ -44,7 +44,7 @@ const UserProfile = () => {
     return (
       <button
         onClick={handleLogin}
-        className="px-4 py-2 text-sm font-medium text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors"
+        className="px-4 py-2 text-sm font-medium rounded-full border transition-colors text-gray-700 border-gray-300 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-800"
       >
         Sign in
       </button>

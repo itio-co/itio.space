@@ -1,35 +1,104 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import tw from "twin.macro"
+import styled from "styled-components"
 import { RiListUnordered, RiGridFill } from "react-icons/ri"
 import { useSelector, useDispatch } from "react-redux"
 
 import { spaceList } from "@/constants/space-list"
 import UserProfile from "@/components/auth/UserProfile"
+import ThemeToggle from "@/components/common/ThemeToggle"
 import { RootState, AppDispatch } from "@/redux/store"
 import { checkUserDataFromLocalStorage } from "@/redux/userSlice"
 
 type ViewMode = 'list' | 'thumbnails'
 
-const MySpace = tw.main`m-0`
-const HeaderBar = tw.header`flex items-center justify-between px-4 py-3 border-b border-gray-200`
-const HeaderTitle = tw.h1`text-lg font-semibold text-gray-800`
-const Toolbar = tw.div`flex justify-end items-center gap-1 px-4 pt-3`
-const SpaceList = tw.div`p-4`
+const MySpace = styled.main`
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text-primary);
+`
+const HeaderBar = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+`
+const HeaderTitle = styled.h1`
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+`
+const Toolbar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem 0;
+`
+const SpaceList = styled.div`
+  padding: 1rem;
+`
 
 // Thumbnail view
-const Grid = tw.div`grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]`
-const SpaceItem = tw.div``
-const Preview = tw.div`w-full pt-[100%] bg-gray-400`
+const Grid = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+`
+const SpaceItem = styled.div``
+const Preview = styled.div`
+  width: 100%;
+  padding-top: 100%;
+  background: var(--surface-hover);
+  border-radius: 8px;
+`
 
 // List view
-const ListContainer = tw.div`flex flex-col gap-1`
-const ListItem = tw.div`flex items-center gap-3 p-2 hover:bg-gray-100 rounded`
-const ListPreview = tw.div`w-10 h-10 bg-gray-400 rounded shrink-0`
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`
+const ListItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  &:hover {
+    background: var(--surface-hover);
+  }
+`
+const ListPreview = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--surface-hover);
+  border-radius: 0.375rem;
+  flex-shrink: 0;
+`
 
 // Shared
-const Title = tw.span`text-sm font-bold`
+const Title = styled.span`
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+`
+
+const ViewButton = styled.button<{ $active: boolean }>`
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  background: ${(p) => (p.$active ? 'var(--surface-active)' : 'transparent')};
+  color: var(--text-secondary);
+  &:hover {
+    background: var(--surface-hover);
+  }
+`
 
 export default function MySpaceComponent() {
     const [viewMode, setViewMode] = useState<ViewMode>('list')
@@ -58,29 +127,26 @@ export default function MySpaceComponent() {
         <MySpace>
             <HeaderBar>
                 <HeaderTitle>My Spaces</HeaderTitle>
-                <UserProfile />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <ThemeToggle />
+                    <UserProfile />
+                </div>
             </HeaderBar>
             <Toolbar>
-                <button
+                <ViewButton
+                    $active={viewMode === 'list'}
                     onClick={() => setViewMode('list')}
-                    css={[
-                        tw`p-2 rounded hover:bg-gray-200`,
-                        viewMode === 'list' && tw`bg-gray-200`,
-                    ]}
                     aria-label="List view"
                 >
                     <RiListUnordered size={18} />
-                </button>
-                <button
+                </ViewButton>
+                <ViewButton
+                    $active={viewMode === 'thumbnails'}
                     onClick={() => setViewMode('thumbnails')}
-                    css={[
-                        tw`p-2 rounded hover:bg-gray-200`,
-                        viewMode === 'thumbnails' && tw`bg-gray-200`,
-                    ]}
                     aria-label="Thumbnail view"
                 >
                     <RiGridFill size={18} />
-                </button>
+                </ViewButton>
             </Toolbar>
             <SpaceList>
                 {viewMode === 'thumbnails' ? (

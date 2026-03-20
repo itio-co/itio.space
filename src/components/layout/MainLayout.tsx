@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react'
 import type { FC } from 'react'
 import { usePathname } from 'next/navigation'
 import UserProfile from '@/components/auth/UserProfile'
+import ThemeToggle from '@/components/common/ThemeToggle'
 import useAuthListener from '@/hooks/useAuthListener'
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -19,7 +20,8 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="relative">
       {!isHideProfile && !isDynamicBoardRoute && (
-        <div className="fixed top-4 right-4 z-50">
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+          <ThemeToggle />
           <UserProfile />
         </div>
       )}
