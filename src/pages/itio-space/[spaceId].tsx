@@ -24,10 +24,14 @@ export default function DemoBoard() {
 
   return (
     <>
-      <div className="absolute top-4 right-4 z-50">
-        <UserProfile />
-      </div>
-      {boardType === 'drawio' && <DrawioBoard boardId={boardId} />}
+      {boardType === 'drawio' && (
+        <>
+          <div className="absolute top-4 right-4 z-50">
+            <UserProfile />
+          </div>
+          <DrawioBoard boardId={boardId} />
+        </>
+      )}
       {boardType === 'langchain' && (
         <>
           <div className="absolute top-4 right-4 z-50">
