@@ -20,9 +20,9 @@ import BoardToolbar from '@/components/xyflow/BoardToolbar'
 import BoardHeader from '@/components/xyflow/BoardHeader'
 import BoardZoomControls from '@/components/xyflow/BoardZoomControls'
 
-import { boards } from '@/constants/boards'
 import { BoardService } from '@/services/board/BoardService';
 import { FirebaseBoardRepository } from '@/adapters/board/FirebaseBoardRepository';
+import { StaticBoardSeedProvider } from '@/adapters/board/StaticBoardSeedProvider';
 import { useTheme } from '@/components/common/ThemeProvider'
 
 type SpaceBoardComponentProps = {
@@ -35,7 +35,10 @@ type NewNodeValueType = {
   type: string
 }
 
-const boardService = new BoardService(new FirebaseBoardRepository());
+const boardService = new BoardService(
+  new FirebaseBoardRepository(),
+  new StaticBoardSeedProvider(),
+);
 
 const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   const { boardId, userSlot } = props
@@ -65,62 +68,21 @@ const SpaceBoardComponent: React.FC<SpaceBoardComponentProps> = (props) => {
   )
 
   useEffect(() => {
-    const isPermissionError = (err: unknown): boolean => {
-      if (err && typeof err === 'object' && 'code' in err) {
-        const code = (err as { code: string }).code;
-        return code === 'permission-denied' || code === 'PERMISSION_DENIED';
-      }
-      if (err instanceof Error) {
-        return err.message.includes('Missing or insufficient permissions');
-      }
-      return false;
-    };
-
-    const loadStaticBoard = (id: string): boolean => {
-      const staticBoard = boards[id];
-      if (staticBoard) {
-        setNodes(staticBoard.nodes);
-        setEdges(staticBoard.edges);
-        setIsBoardExist(true);
-        return true;
-      }
-      setIsBoardExist(false);
-      return false;
-    };
-
     const fetchBoard = async () => {
       if (!boardId) return;
 
       try {
-        const board = await boardService.getBoard(boardId);
-
+        const board = await boardService.getOrSeedBoard(boardId);
         if (board) {
           setNodes(board.nodes);
           setEdges(board.edges);
           setIsBoardExist(true);
         } else {
-           if (loadStaticBoard(boardId)) {
-             if (boardId === 'demoboard') {
-                 try {
-                     await boardService.createBoard(boardId, boards[boardId].nodes, boards[boardId].edges);
-                     console.log('Seeded demoboard to database');
-                 } catch (seedError) {
-                     if (isPermissionError(seedError)) {
-                       console.warn('Firestore permission denied — demoboard loaded from local data. Update Firestore rules to enable persistence.');
-                     } else {
-                       console.error('Failed to seed demoboard', seedError);
-                     }
-                 }
-             }
-           }
+          setIsBoardExist(false);
         }
       } catch (error) {
-        if (isPermissionError(error)) {
-          console.warn('Firestore permission denied — loading board from local data. Update Firestore rules to enable persistence.');
-        } else {
-          console.error('Failed to load board', error);
-        }
-        loadStaticBoard(boardId);
+        console.error('Failed to load board', error);
+        setIsBoardExist(false);
       }
     };
 
