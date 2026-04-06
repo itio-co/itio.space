@@ -419,13 +419,99 @@ body {
   padding: 6px;
 }
 
-/* ---- Left Toolbar (Popup) ---- */
+/* ---- Left Toolbar ---- */
+
+/* Shared base positioning */
 .board-toolbar {
   position: absolute;
   left: 12px;
-  bottom: 16px;
   z-index: 10;
   pointer-events: none;
+}
+
+/* === Island mode (desktop / landscape / wider screens) === */
+.board-toolbar--island {
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.board-toolbar__tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
+  pointer-events: auto;
+}
+
+.board-toolbar__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+
+.board-toolbar__btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.board-toolbar__btn--active {
+  background: var(--surface-active);
+  color: var(--accent);
+}
+
+.board-toolbar__btn--active:hover {
+  background: var(--surface-active);
+  color: var(--accent);
+}
+
+.board-toolbar__btn--add {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+}
+
+.board-toolbar__btn--add:hover {
+  background: var(--accent-hover);
+  color: #fff;
+}
+
+.board-toolbar__separator {
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.board-toolbar__history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
+  pointer-events: auto;
+}
+
+/* === Popup mode (narrow mobile portrait) === */
+.board-toolbar--popup {
+  bottom: 16px;
 }
 
 .board-toolbar__toggle {
@@ -545,6 +631,22 @@ body {
 .board-toolbar__popup-history {
   display: flex;
   gap: 2px;
+}
+
+/* === Responsive: show island on wide screens, popup on narrow portrait === */
+/* Default: show island, hide popup */
+.board-toolbar--popup {
+  display: none;
+}
+
+/* Narrow portrait screens (max-width 600px AND portrait orientation) */
+@media (max-width: 600px) and (orientation: portrait) {
+  .board-toolbar--island {
+    display: none;
+  }
+  .board-toolbar--popup {
+    display: block;
+  }
 }
 
 /* ---- Zoom Controls ---- */

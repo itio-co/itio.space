@@ -62,55 +62,80 @@ const BoardToolbar: React.FC<BoardToolbarProps> = ({ onAddStickyNote, activeTool
   }
 
   return (
-    <div className="board-toolbar" ref={popupRef}>
-      {/* Floating toggle button */}
-      <button
-        className={`board-toolbar__toggle ${isOpen ? 'board-toolbar__toggle--active' : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
-        title={isOpen ? 'Close tools' : 'Open tools'}
-      >
-        {isOpen ? <RiCloseLine size={22} /> : <RiToolsLine size={22} />}
-      </button>
-
-      {/* Popup tools menu */}
-      {isOpen && (
-        <div className="board-toolbar__popup">
-          <div className="board-toolbar__popup-grid">
-            {tools.map((tool) => (
-              <button
-                key={tool.id}
-                className={`board-toolbar__popup-btn ${activeTool === tool.id ? 'board-toolbar__popup-btn--active' : ''}`}
-                title={tool.label}
-                onClick={() => handleToolClick(tool)}
-              >
-                {tool.icon}
-                <span className="board-toolbar__popup-label">{tool.label}</span>
-              </button>
-            ))}
-          </div>
-          {/* Separator */}
-          <div className="board-toolbar__popup-separator" />
-          {/* Add more */}
-          <button className="board-toolbar__popup-btn board-toolbar__popup-btn--add" title="More tools">
+    <>
+      {/* Desktop/landscape: classic island toolbar */}
+      <div className="board-toolbar board-toolbar--island">
+        <div className="board-toolbar__tools">
+          {tools.map((tool) => (
+            <button
+              key={tool.id}
+              className={`board-toolbar__btn ${activeTool === tool.id ? 'board-toolbar__btn--active' : ''}`}
+              title={tool.label}
+              onClick={tool.onClick}
+            >
+              {tool.icon}
+            </button>
+          ))}
+          <div className="board-toolbar__separator" />
+          <button className="board-toolbar__btn board-toolbar__btn--add" title="More tools">
             <RiAddLine size={20} />
-            <span className="board-toolbar__popup-label">More</span>
           </button>
-          {/* Separator */}
-          <div className="board-toolbar__popup-separator" />
-          {/* Undo/Redo */}
-          <div className="board-toolbar__popup-history">
-            <button className="board-toolbar__popup-btn" title="Undo">
-              <RiArrowGoBackLine size={18} />
-              <span className="board-toolbar__popup-label">Undo</span>
-            </button>
-            <button className="board-toolbar__popup-btn" title="Redo">
-              <RiArrowGoForwardLine size={18} />
-              <span className="board-toolbar__popup-label">Redo</span>
-            </button>
-          </div>
         </div>
-      )}
-    </div>
+        <div className="board-toolbar__history">
+          <button className="board-toolbar__btn" title="Undo">
+            <RiArrowGoBackLine size={18} />
+          </button>
+          <button className="board-toolbar__btn" title="Redo">
+            <RiArrowGoForwardLine size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile portrait: popup toolbar */}
+      <div className="board-toolbar board-toolbar--popup" ref={popupRef}>
+        <button
+          className={`board-toolbar__toggle ${isOpen ? 'board-toolbar__toggle--active' : ''}`}
+          onClick={() => setIsOpen(!isOpen)}
+          title={isOpen ? 'Close tools' : 'Open tools'}
+        >
+          {isOpen ? <RiCloseLine size={22} /> : <RiToolsLine size={22} />}
+        </button>
+
+        {isOpen && (
+          <div className="board-toolbar__popup">
+            <div className="board-toolbar__popup-grid">
+              {tools.map((tool) => (
+                <button
+                  key={tool.id}
+                  className={`board-toolbar__popup-btn ${activeTool === tool.id ? 'board-toolbar__popup-btn--active' : ''}`}
+                  title={tool.label}
+                  onClick={() => handleToolClick(tool)}
+                >
+                  {tool.icon}
+                  <span className="board-toolbar__popup-label">{tool.label}</span>
+                </button>
+              ))}
+            </div>
+            <div className="board-toolbar__popup-separator" />
+            <button className="board-toolbar__popup-btn board-toolbar__popup-btn--add" title="More tools">
+              <RiAddLine size={20} />
+              <span className="board-toolbar__popup-label">More</span>
+            </button>
+            <div className="board-toolbar__popup-separator" />
+            <div className="board-toolbar__popup-history">
+              <button className="board-toolbar__popup-btn" title="Undo">
+                <RiArrowGoBackLine size={18} />
+                <span className="board-toolbar__popup-label">Undo</span>
+              </button>
+              <button className="board-toolbar__popup-btn" title="Redo">
+                <RiArrowGoForwardLine size={18} />
+                <span className="board-toolbar__popup-label">Redo</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   )
 }
 
