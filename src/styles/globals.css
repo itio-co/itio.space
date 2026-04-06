@@ -420,16 +420,22 @@ body {
 }
 
 /* ---- Left Toolbar ---- */
+
+/* Shared base positioning */
 .board-toolbar {
   position: absolute;
   left: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* === Island mode (desktop / landscape / wider screens) === */
+.board-toolbar--island {
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  z-index: 10;
-  pointer-events: none;
 }
 
 .board-toolbar__tools {
@@ -501,6 +507,146 @@ body {
   border-radius: 12px;
   box-shadow: 0 2px 12px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
   pointer-events: auto;
+}
+
+/* === Popup mode (narrow mobile portrait) === */
+.board-toolbar--popup {
+  bottom: 16px;
+}
+
+.board-toolbar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 16px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+
+.board-toolbar__toggle:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.board-toolbar__toggle--active {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+.board-toolbar__toggle--active:hover {
+  background: var(--surface-hover);
+}
+
+.board-toolbar__popup {
+  position: absolute;
+  bottom: 56px;
+  left: 0;
+  min-width: 200px;
+  padding: 8px;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--shadow-card), 0 0 0 1px var(--shadow-outline);
+  pointer-events: auto;
+  animation: toolbar-popup-in 0.18s ease-out;
+}
+
+@keyframes toolbar-popup-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.board-toolbar__popup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.board-toolbar__popup-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.board-toolbar__popup-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.board-toolbar__popup-btn--active {
+  background: var(--surface-active);
+  color: var(--accent);
+}
+
+.board-toolbar__popup-btn--active:hover {
+  background: var(--surface-active);
+  color: var(--accent);
+}
+
+.board-toolbar__popup-btn--add {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  justify-content: center;
+}
+
+.board-toolbar__popup-btn--add:hover {
+  background: var(--accent-hover);
+  color: #fff;
+}
+
+.board-toolbar__popup-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.board-toolbar__popup-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 4px;
+}
+
+.board-toolbar__popup-history {
+  display: flex;
+  gap: 2px;
+}
+
+/* === Responsive: show island on wide screens, popup on narrow portrait === */
+/* Default: show island, hide popup */
+.board-toolbar--popup {
+  display: none;
+}
+
+/* Narrow portrait screens (max-width 600px AND portrait orientation) */
+@media (max-width: 600px) and (orientation: portrait) {
+  .board-toolbar--island {
+    display: none;
+  }
+  .board-toolbar--popup {
+    display: block;
+  }
 }
 
 /* ---- Zoom Controls ---- */
